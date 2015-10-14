@@ -3,7 +3,8 @@ package entities;
 import java.io.Serializable;
 
 import javax.persistence.EmbeddedId;
-
+import javax.persistence.Entity;
+@Entity
 public class Position implements Serializable{
 private PositionId positionId;
 private String currentPosition;

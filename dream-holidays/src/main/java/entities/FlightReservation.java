@@ -3,7 +3,8 @@ package entities;
 import java.io.Serializable;
 
 import javax.persistence.EmbeddedId;
-
+import javax.persistence.Entity;
+@Entity
 public class FlightReservation implements Serializable{
 private FlightReservationId flightReservationId;
 private String seat;

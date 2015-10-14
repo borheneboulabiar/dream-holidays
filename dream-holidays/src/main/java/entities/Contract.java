@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.EmbeddedId;
-
+import javax.persistence.Entity;
+@Entity
 public class Contract implements Serializable{
 private ContractId contractId;
 private Date startDate;
