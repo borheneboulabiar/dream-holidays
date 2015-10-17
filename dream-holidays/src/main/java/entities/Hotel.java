@@ -1,18 +1,33 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 @Entity
 public class Hotel implements Serializable{
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 private Integer id;
 private String name;
 private Address address;
 private Integer phoneNumber;
 
+private List<HotelReservation> reservationsHotel;
+
+@OneToMany(mappedBy="hotel")
+public List<HotelReservation> getReservationsHotel() {
+	return reservationsHotel;
+}
+public void setReservationsHotel(List<HotelReservation> reservationsHotel) {
+	this.reservationsHotel = reservationsHotel;
+}
 public Hotel() {
 	super();
 }

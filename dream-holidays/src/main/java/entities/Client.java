@@ -1,14 +1,20 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 @Entity
 public class Client implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String lastName;
 	private String firstName;
@@ -17,6 +23,35 @@ public class Client implements Serializable{
 	private String passport;
 	private String NIC;
 	private Integer phoneNumber;
+	
+	private List<HotelReservation> reservationsHotel;
+	private List<Contract> contracts;
+	private List<FlightReservation> reservationsFlight;
+	
+	
+	
+	public List<FlightReservation> getReservationsFlight() {
+		return reservationsFlight;
+	}
+	public void setReservationsFlight(List<FlightReservation> reservationsFlight) {
+		this.reservationsFlight = reservationsFlight;
+	}
+	@OneToMany(mappedBy = "client")
+	public List<Contract> getContracts() {
+		return contracts;
+	}
+	public void setContracts(List<Contract> contracts) {
+		this.contracts = contracts;
+	}
+	@OneToMany(mappedBy = "client")
+	public List<HotelReservation> getReservationsHotel() {
+		return reservationsHotel;
+	}
+	public void setReservationsHotel(List<HotelReservation> reservationsHotel) {
+		this.reservationsHotel = reservationsHotel;
+	}
+
+	
 	
 	public Client() {
 		super();

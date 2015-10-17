@@ -5,14 +5,43 @@ import java.util.Date;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 @Entity
 public class HotelReservation implements Serializable{
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 private HotelReservationId hotelReservationId;
 private String state;
 private Date departureDate;
 private Date arrivalDate;
 private Integer numberOfBed;
 private String typeOfRoom;
+
+private Client client;
+private Hotel hotel;
+
+
+@ManyToOne
+@JoinColumn(name = "clientId", referencedColumnName = "id", updatable = false, insertable = false)
+public Client getClient() {
+	return client;
+}
+
+public void setClient(Client client) {
+	this.client = client;
+}
+@ManyToOne
+@JoinColumn(name = "hotelId", referencedColumnName = "id", updatable = false, insertable = false)
+public Hotel getHotel() {
+	return hotel;
+}
+
+public void setHotel(Hotel hotel) {
+	this.hotel = hotel;
+}
 
 public HotelReservation() {
 	super();
