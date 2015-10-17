@@ -29,7 +29,7 @@ public class Client implements Serializable{
 	private List<FlightReservation> reservationsFlight;
 	
 	
-	
+	@OneToMany(mappedBy = "client")
 	public List<FlightReservation> getReservationsFlight() {
 		return reservationsFlight;
 	}

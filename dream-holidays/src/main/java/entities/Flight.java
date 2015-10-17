@@ -8,63 +8,87 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 @Entity
-public class Flight implements Serializable{
-/**
+public class Flight implements Serializable {
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-private Integer id;
-private Date departureDate;
-private Date arrivalDate;
-private Integer numberOfPlaces;
+	private Integer id;
+	private Date departureDate;
+	private Date arrivalDate;
+	private Integer numberOfPlaces;
 
-private List<FlightReservation> reservationsFlight;
+	private List<FlightReservation> reservationsFlight;
+	private List<Position> positions;
+	private Aeroport aeroport;
+	
+	@ManyToOne
+	public Aeroport getAeroport() {
+		return aeroport;
+	}
 
+	public void setAeroport(Aeroport aeroport) {
+		this.aeroport = aeroport;
+	}
 
+	@OneToMany(mappedBy = "flight")
+	public List<Position> getPositions() {
+		return positions;
+	}
 
-public List<FlightReservation> getReservationsFlight() {
-	return reservationsFlight;
-}
-public void setReservationsFlight(List<FlightReservation> reservationsFlight) {
-	this.reservationsFlight = reservationsFlight;
-}
-public Flight() {
-	super();
-}
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-public Integer getId() {
-	return id;
-}
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
+	}
 
-public void setId(Integer id) {
-	this.id = id;
-}
+	@OneToMany(mappedBy = "flight")
+	public List<FlightReservation> getReservationsFlight() {
+		return reservationsFlight;
+	}
 
-public Date getDepartureDate() {
-	return departureDate;
-}
+	public void setReservationsFlight(List<FlightReservation> reservationsFlight) {
+		this.reservationsFlight = reservationsFlight;
+	}
 
-public void setDepartureDate(Date departureDate) {
-	this.departureDate = departureDate;
-}
+	public Flight() {
+		super();
+	}
 
-public Date getArrivalDate() {
-	return arrivalDate;
-}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Integer getId() {
+		return id;
+	}
 
-public void setArrivalDate(Date arrivalDate) {
-	this.arrivalDate = arrivalDate;
-}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-public Integer getNumberOfPlaces() {
-	return numberOfPlaces;
-}
+	public Date getDepartureDate() {
+		return departureDate;
+	}
 
-public void setNumberOfPlaces(Integer numberOfPlaces) {
-	this.numberOfPlaces = numberOfPlaces;
-}
+	public void setDepartureDate(Date departureDate) {
+		this.departureDate = departureDate;
+	}
 
+	public Date getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public void setArrivalDate(Date arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+
+	public Integer getNumberOfPlaces() {
+		return numberOfPlaces;
+	}
+
+	public void setNumberOfPlaces(Integer numberOfPlaces) {
+		this.numberOfPlaces = numberOfPlaces;
+	}
 
 }
