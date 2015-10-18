@@ -1,6 +1,13 @@
 package services.impl;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import entities.Car;
 import services.interfaces.CarManagementLocal;
 import services.interfaces.CarManagementRemote;
 
@@ -9,12 +16,41 @@ import services.interfaces.CarManagementRemote;
  */
 @Stateless
 public class CarManagement implements CarManagementRemote, CarManagementLocal {
-
-    /**
+	
+	@PersistenceContext
+	EntityManager entityManager;
+    
+	/**
      * Default constructor. 
      */
     public CarManagement() {
         // TODO Auto-generated constructor stub
     }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Car> findAllCars() {
+			
+		return entityManager.createQuery("Select c from" + Car.class.getSimpleName() +"c").getResultList();
+		
+	}
+
+	@Override
+	public Car findCarById(int id) {
+		
+		return entityManager.find(Car.class, id);
+	}
+
+	@Override
+	public Boolean AddCar(Car car) {
+		Boolean add = true;
+		try{
+			entityManager.persist(car);
+		}catch(Exception e){
+			add = false;
+		}
+		return add;
+		
+	}
 
 }

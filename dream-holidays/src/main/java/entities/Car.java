@@ -8,54 +8,58 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 @Entity
-public class Car implements Serializable{
-/**
+public class Car implements Serializable {
+	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = 1L;
-private Integer id;
-private String mark;
-private String model;
 
-private List<Contract> contracts;
+	private Integer id;
+	private String mark;
+	private String model;
 
+	private List<Contract> contracts;
 
-@OneToMany(mappedBy = "car")
-public List<Contract> getContracts() {
-	return contracts;
-}
-public void setContracts(List<Contract> contracts) {
-	this.contracts = contracts;
-}
-public Car() {
-	super();
-}
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-public Integer getId() {
-	return id;
-}
+	@OneToMany(mappedBy = "car")
+	public List<Contract> getContracts() {
+		return contracts;
+	}
 
-public void setId(Integer id) {
-	this.id = id;
-}
+	public void setContracts(List<Contract> contracts) {
+		this.contracts = contracts;
+	}
 
-public String getMark() {
-	return mark;
-}
+	public Car() {
+		super();
+	}
 
-public void setMark(String mark) {
-	this.mark = mark;
-}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Integer getId() {
+		return id;
+	}
 
-public String getModel() {
-	return model;
-}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-public void setModel(String model) {
-	this.model = model;
-}
+	public String getMark() {
+		return mark;
+	}
 
+	public void setMark(String mark) {
+		this.mark = mark;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
 
 }
