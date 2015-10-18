@@ -17,4 +17,8 @@ public class FlightManagementDelegate {
 	public static List<Flight> doFindAllFlights() {
 		return getProxy().findAllFlights();
 	}
+	
+	public static Flight doFindFlightById(Integer id) {
+		return getProxy().findFlightById(id);
+	}
 }
