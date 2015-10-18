@@ -14,13 +14,13 @@ public interface HotelManagementRemote {
 
 	void AddHotel(Hotel h);
 	void DeleteHotel(int id);
-	void UpdateHotel(int id);
+	void UpdateHotel(Hotel hotel);
 	List<Hotel> findAllHotels();
-	Hotel findHotelById(int id);
+	Hotel SearchHotelById(int id);
 	List<HotelReservation> getReservationByDate(Date date,Hotel hotel);
 	int getNumberOfAvailableRoom(Hotel hotel);
 	int getNumberOfAvailableRoomByDate(Date date,Hotel hotel);
-	int getNumberOfAvailableRoomByType(String typeOfRoom);
+	int getNumberOfAvailableRoomByType(Date date, Hotel hotel,String typeOfRoom);
 	
 	
 	

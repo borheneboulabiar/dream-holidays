@@ -13,11 +13,17 @@ public interface HotelManagementLocal {
 
 	void AddHotel(Hotel h);
 	void DeleteHotel(int id);
-	void UpdateHotel(int id);
 	List<Hotel> findAllHotels();
-	Hotel findHotelById(int id);
-	List<HotelReservation> getReservationByDate(Date date,Hotel hotel);
+	Hotel SearchHotelById(int id);
 	int getNumberOfAvailableRoom(Hotel hotel);
 	int getNumberOfAvailableRoomByDate(Date date,Hotel hotel);
-	int getNumberOfAvailableRoomByType(String typeOfRoom);
+	int getNumberOfAvailableRoomByType(Date date, Hotel hotel,String typeOfRoom);
+	
+	
+	void UpdateHotel(Hotel hotel);
+	void AddReservation(HotelReservation hr); 
+	void DeleteReservation(int id); 
+	void UpdateReservation(HotelReservation hr);
+	HotelReservation SearchHotelReservationById(int id);
+	List<HotelReservation> getReservationByDate(Date date,Hotel hotel);
 }
