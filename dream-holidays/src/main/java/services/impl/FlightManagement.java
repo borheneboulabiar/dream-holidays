@@ -35,4 +35,14 @@ public class FlightManagement implements FlightManagementRemote,
 		return query.getResultList();
 	}
 
-}
+
+	@Override
+	public Flight findFlightById(Integer id) {
+		Flight flight = null;
+		try {
+			flight = entityManager.find(Flight.class, id);
+		} catch (Exception e) {
+			return null;
+		}
+		return flight;
+	}}
