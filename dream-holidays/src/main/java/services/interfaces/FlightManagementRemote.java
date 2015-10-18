@@ -10,4 +10,5 @@ import entities.Flight;
 public interface FlightManagementRemote {
 
 	List<Flight> findAllFlights();
+	Flight findFlightById(Integer id);
 }
