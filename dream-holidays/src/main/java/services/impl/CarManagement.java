@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import entities.Car;
+import entities.Contract;
 import services.interfaces.CarManagementLocal;
 import services.interfaces.CarManagementRemote;
 
@@ -70,6 +71,24 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 				("SELECT c from"+Car.class.getSimpleName()+"c where c.Mark = :param",Car.class)
 				.setParameter("param", mark);
 		return query.getResultList();
+	}
+
+	@Override
+	public List<Contract> findContractsByCarId(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Contract> findContractsByCarMark(String mark) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Contract> findContractsByCarModel(String model) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
