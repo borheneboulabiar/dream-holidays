@@ -1,5 +1,9 @@
 package delegate;
 
+import java.util.List;
+
+import entities.Flight;
+import entities.Hotel;
 import locator.ServiceLocator;
 import services.interfaces.HotelManagementRemote;
 
@@ -11,5 +15,14 @@ public class HotelManagementDelegate {
 		return (HotelManagementRemote) ServiceLocator.getInstance().getProxy(
 				jndiName);
 	}
+	
+	public static List<Hotel> dofindAllHotels() {
+		return getProxy().findAllHotels();
+	}
+	
+	public Hotel SearchHotelById(int id) {
+		return getProxy().SearchHotelById(id);
+	}
+	
 
 }
