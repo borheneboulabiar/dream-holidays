@@ -3,6 +3,7 @@ package delegate;
 import java.util.List;
 
 import entities.Car;
+import entities.Contract;
 import locator.ServiceLocator;
 import services.interfaces.CarManagementRemote;
 
@@ -32,5 +33,17 @@ public class CarManagementDelegate {
 	
 	public static Car doFindCarById(Integer id){
 		return getProxy().findCarById(id);
+	}
+	
+	public static List<Contract> doFindContractsByCarId(Integer id){
+		return getProxy().findContractsByCarId(id);
+	}
+	
+	public static List<Contract> doFindContractsByCarMark(String mark){
+		return getProxy().findContractsByCarMark(mark);
+	}
+	
+	public static List<Contract> doFindContractsByCarModel(String model){
+		return getProxy().findContractsByCarModel(model);
 	}
 }
