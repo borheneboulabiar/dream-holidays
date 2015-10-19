@@ -14,11 +14,23 @@ public class CarManagementDelegate {
 		return (CarManagementRemote) ServiceLocator.getInstance().getProxy(jndiName);
 	}
 	
-	public List<Car> doFindAllCars(){
+	public static List<Car> doFindAllCars(){
 		return getProxy().findAllCars();
 	}
 	
-	public Boolean doAddCar(Car car){
+	public static Boolean doAddCar(Car car){
 		return getProxy().AddCar(car);
+	}
+	
+	public static List<Car> doFindCarByModel(String model){
+		return getProxy().findCarByModel(model);
+	}
+	
+	public static List<Car> doFindCarByMark(String mark){
+		return getProxy().findCarByMark(mark);
+	}
+	
+	public static Car doFindCarById(Integer id){
+		return getProxy().findCarById(id);
 	}
 }

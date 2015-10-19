@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import entities.Car;
 import services.interfaces.CarManagementLocal;
@@ -55,15 +56,20 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 
 	@Override
 	public List<Car> findCarByModel(String model) {
-		entityManager.createQuery("Select c from"+ Car.class.getSimpleName()+"c where c.Model = :param");
-		entityManager.setProperty(param, model);
-		return 
+		TypedQuery<Car> query = entityManager.createQuery
+				("Select c from"+ Car.class.getSimpleName()+"c where c.Model =:param",Car.class)
+				.setParameter("param", model);
+		
+		return query.getResultList();
+		
 	}
 
 	@Override
 	public List<Car> findCarByMark(String mark) {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Car> query = entityManager.createQuery
+				("SELECT c from"+Car.class.getSimpleName()+"c where c.Mark = :param",Car.class)
+				.setParameter("param", mark);
+		return query.getResultList();
 	}
 
 }
