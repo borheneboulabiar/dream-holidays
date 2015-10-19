@@ -53,4 +53,17 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 		
 	}
 
+	@Override
+	public List<Car> findCarByModel(String model) {
+		entityManager.createQuery("Select c from"+ Car.class.getSimpleName()+"c where c.Model = :param");
+		entityManager.setProperty(param, model);
+		return 
+	}
+
+	@Override
+	public List<Car> findCarByMark(String mark) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

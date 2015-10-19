@@ -12,4 +12,6 @@ public interface CarManagementRemote {
 	Boolean AddCar(Car car);
 	List<Car> findAllCars();
 	Car findCarById(int id);
+	List<Car> findCarByModel(String model);
+	List<Car> findCarByMark(String mark);
 }
