@@ -8,7 +8,7 @@ import services.interfaces.CarManagementRemote;
 
 public class CarManagementDelegate {
 
-	public static final String jndiName = "/dream-holidays/FlightManagement!services.interfaces.CarManagementRemote";
+	public static final String jndiName = "/dream-holidays/CarManagement!services.interfaces.CarManagementRemote";
 	
 	public static CarManagementRemote getProxy(){
 		return (CarManagementRemote) ServiceLocator.getInstance().getProxy(jndiName);
