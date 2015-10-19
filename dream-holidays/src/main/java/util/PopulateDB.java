@@ -1,5 +1,6 @@
 package util;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -26,6 +27,7 @@ public class PopulateDB {
 
 	@PostConstruct
 	public void initDB() {
+		
 		Aeroport aeroport = new Aeroport();
 		aeroport.setTown("Madrid");
 		Aeroport aeroport1 = new Aeroport();
