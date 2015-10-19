@@ -1,5 +1,6 @@
 package services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -45,4 +46,14 @@ public class FlightManagement implements FlightManagementRemote,
 			return null;
 		}
 		return flight;
+	}
+
+	@Override
+	public List<Flight> findFlightByDate(Date ArrivalDate, Date DepartureDate) {
+		String jpql = "select f from Flight f where ArrivalDate=:param1 and DepartureDate=:param2";
+		Query query = entityManager.createQuery(jpql);
+		query.setParameter("param1", ArrivalDate);
+		query.setParameter("param2", DepartureDate);
+		return query.getResultList();
+		
 	}}
