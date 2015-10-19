@@ -8,62 +8,74 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 @Entity
-public class Hotel implements Serializable{
-/**
+public class Hotel implements Serializable {
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-private Integer id;
-private String name;
-private Address address;
-private Integer phoneNumber;
+	private Integer id;
+	private String name;
+	private Address address;
+	private Integer phoneNumber;
+	private Integer NumberofStars;
 
-private List<HotelReservation> reservationsHotel;
+	private List<HotelReservation> reservationsHotel;
 
-@OneToMany(mappedBy="hotel")
-public List<HotelReservation> getReservationsHotel() {
-	return reservationsHotel;
-}
-public void setReservationsHotel(List<HotelReservation> reservationsHotel) {
-	this.reservationsHotel = reservationsHotel;
-}
-public Hotel() {
-	super();
-}
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-public Integer getId() {
-	return id;
-}
+	@OneToMany(mappedBy = "hotel")
+	public List<HotelReservation> getReservationsHotel() {
+		return reservationsHotel;
+	}
 
-public void setId(Integer id) {
-	this.id = id;
-}
+	public void setReservationsHotel(List<HotelReservation> reservationsHotel) {
+		this.reservationsHotel = reservationsHotel;
+	}
 
-public String getName() {
-	return name;
-}
+	public Hotel() {
+		super();
+	}
 
-public void setName(String name) {
-	this.name = name;
-}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Integer getId() {
+		return id;
+	}
 
-public Address getAddress() {
-	return address;
-}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-public void setAddress(Address address) {
-	this.address = address;
-}
+	public String getName() {
+		return name;
+	}
 
-public Integer getPhoneNumber() {
-	return phoneNumber;
-}
+	public void setName(String name) {
+		this.name = name;
+	}
 
-public void setPhoneNumber(Integer phoneNumber) {
-	this.phoneNumber = phoneNumber;
-}
+	public Address getAddress() {
+		return address;
+	}
 
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Integer getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(Integer phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public Integer getNumberofStars() {
+		return NumberofStars;
+	}
+
+	public void setNumberofStars(Integer numberofStars) {
+		NumberofStars = numberofStars;
+	}
 
 }
