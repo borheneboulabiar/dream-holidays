@@ -1,5 +1,6 @@
 package delegate;
 
+import java.util.Date;
 import java.util.List;
 
 import locator.ServiceLocator;
@@ -21,4 +22,9 @@ public class FlightManagementDelegate {
 	public static Flight doFindFlightById(Integer id) {
 		return getProxy().findFlightById(id);
 	}
+	
+	public static List<Flight> doFindFlightByDate(Date ArrivalDate, Date DepartureDate) {
+		return getProxy().findFlightByDate(ArrivalDate,DepartureDate);
+	}
+	
 }
