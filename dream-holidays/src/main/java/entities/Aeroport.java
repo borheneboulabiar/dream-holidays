@@ -21,7 +21,11 @@ public class Aeroport implements Serializable {
 	private List<Position> positions;
 	private List<Flight> flights;
 
-	@OneToMany(mappedBy="aeroport")
+	public Aeroport() {
+		super();
+	}
+
+	@OneToMany(mappedBy = "aeroport")
 	public List<Flight> getFlights() {
 		return flights;
 	}
@@ -37,10 +41,6 @@ public class Aeroport implements Serializable {
 
 	public void setPositions(List<Position> positions) {
 		this.positions = positions;
-	}
-
-	public Aeroport() {
-		super();
 	}
 
 	@Id
