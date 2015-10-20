@@ -5,13 +5,14 @@ import java.util.List;
 import delegate.CarManagementDelegate;
 import entities.Contract;
 
-public class testFindContractByCarId {
+public class testFindAllContracts {
 
 	public static void main(String[] args) {
-		
-		List<Contract> contracts = CarManagementDelegate.doFindContractsByCarId(1);
+		List<Contract> contracts= CarManagementDelegate.doFindAllContracts();
 		for (Contract contract : contracts) {
-			System.out.println(contract.getStartDate());
+			System.out.println(contract);
 		}
+
 	}
+
 }

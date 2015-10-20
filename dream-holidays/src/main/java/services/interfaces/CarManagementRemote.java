@@ -15,8 +15,12 @@ public interface CarManagementRemote {
 	Car findCarById(int id);
 	List<Car> findCarByModel(String model);
 	List<Car> findCarByMark(String mark);
+	
+	List<Contract> findAllContracts();
 	List<Contract> findContractsByCarId(Integer id);
 	List<Contract> findContractsByCarMark(String mark);
 	List<Contract> findContractsByCarModel(String model);
+	
+	Boolean addContract(Contract contract);
 	
 }

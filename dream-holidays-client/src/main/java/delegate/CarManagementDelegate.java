@@ -46,4 +46,12 @@ public class CarManagementDelegate {
 	public static List<Contract> doFindContractsByCarModel(String model){
 		return getProxy().findContractsByCarModel(model);
 	}
+	
+	public static Boolean doAddContrct(Contract contract){
+		return getProxy().addContract(contract);
+	}
+	
+	public static List<Contract> doFindAllContracts(){
+		return getProxy().findAllContracts();
+	}
 }

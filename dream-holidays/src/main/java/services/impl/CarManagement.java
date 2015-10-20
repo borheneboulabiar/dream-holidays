@@ -33,7 +33,7 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	@Override
 	public List<Car> findAllCars() {
 			
-		return entityManager.createQuery("Select c from" + Car.class.getSimpleName() +"c").getResultList();
+		return entityManager.createQuery("Select c from Car c").getResultList();
 		
 	}
 
@@ -58,7 +58,7 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	@Override
 	public List<Car> findCarByModel(String model) {
 		TypedQuery<Car> query = entityManager.createQuery
-				("Select c from"+ Car.class.getSimpleName()+"c where c.Model =:param",Car.class)
+				("Select c from Car c where c.Model =:param",Car.class)
 				.setParameter("param", model);
 		
 		return query.getResultList();
@@ -68,7 +68,7 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	@Override
 	public List<Car> findCarByMark(String mark) {
 		TypedQuery<Car> query = entityManager.createQuery
-				("SELECT c from"+Car.class.getSimpleName()+"c where c.Mark = :param",Car.class)
+				("SELECT c from "+Car.class.getSimpleName()+" c where c.Mark = :param",Car.class)
 				.setParameter("param", mark);
 		return query.getResultList();
 	}
@@ -81,16 +81,38 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Contract> findContractsByCarMark(String mark) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = entityManager.createQuery("SELECT co from Car ca JOIN ca.contracts where ca.mark = :param ");
+		query.setParameter("param", mark);
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Contract> findContractsByCarModel(String model) {
+		Query query = entityManager.createQuery("SELECT co from Car ca JOIN ca.contracts where ca.model = :param ");
+		query.setParameter("param", model);
+		return query.getResultList();
 	}
 
 	@Override
-	public List<Contract> findContractsByCarModel(String model) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean addContract(Contract contract) {
+		Boolean add = true;
+		try {
+			entityManager.persist(contract);
+		} catch (Exception e) {
+			add = false;
+		}
+		return add;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Contract> findAllContracts() {
+		
+		return entityManager.createQuery("SELECT c from Contract c").getResultList();
 	}
 
 }
