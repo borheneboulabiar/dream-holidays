@@ -75,8 +75,10 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 
 	@Override
 	public List<Contract> findContractsByCarId(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Contract> query = entityManager.createQuery
+				("SELECT c FROM Contract where c.car = :param",Contract.class)
+				.setParameter("param", id);
+		return query.getResultList();
 	}
 
 	@Override
