@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import entities.Address;
+import entities.Client;
 import entities.Hotel;
 import entities.HotelReservation;
 import services.interfaces.HotelManagementLocal;
@@ -49,8 +50,8 @@ public class HotelManagement implements HotelManagementRemote,
 	@Override
 	public void UpdateHotel(Hotel hotel) {
 
-		entityManager.remove(SearchHotelById(hotel.getId()));
-		entityManager.merge(hotel);
+		entityManager.merge(SearchHotelById(hotel.getId()));
+		//entityManager.merge(hotel);
 
 	}
 
@@ -73,7 +74,7 @@ public class HotelManagement implements HotelManagementRemote,
 	}
 
 	@Override
-	public List<Hotel> SearchHotelByStars(int numberOfStars) {
+	public List<Hotel> SearchHotelsByStars(int numberOfStars) {
 		TypedQuery<Hotel> query = entityManager.createQuery(
 				"SELECT h FROM Hotel h where NumberofStars=:numberOfSatrs",
 				Hotel.class).setParameter("numberOfSatrs", numberOfStars);
@@ -85,7 +86,7 @@ public class HotelManagement implements HotelManagementRemote,
 	}
 
 	@Override
-	public List<Hotel> SearchHotelByCountry(Address adr) {
+	public List<Hotel> SearchHotelsByCountry(Address adr) {
 		TypedQuery<Hotel> query = entityManager.createQuery(
 				"SELECT h FROM Hotel h where country=:country",
 				Hotel.class).setParameter("country", adr.getCountry());
@@ -104,23 +105,33 @@ public class HotelManagement implements HotelManagementRemote,
 	}
 
 	@Override
-	public void UpdateReservation(HotelReservation hr) {
-		// entityManager.remove(SearchHotelById(hr.g));
-		entityManager.merge(hr);
+	public void UpdateReservation(Client c, Hotel h) {
+		
+		entityManager.merge(SearchReservationByHotelClient(c,h));
 
 	}
 
 	@Override
-	public void DeleteReservation(int id) {
-		// TODO Auto-generated method stub
-
+	public void DeleteReservation(Client c, Hotel h) {
+	
+		entityManager.remove(SearchReservationByHotelClient(c,h));
 	}
 
 	@Override
-	public List<HotelReservation> SearchNotCompletedHotelReservation(Address adr) {
-		// TODO Auto-generated method stub
-		return null;
+	public HotelReservation SearchReservationByHotelClient(Client c, Hotel h) {
+		
+		HotelReservation hr = (HotelReservation) entityManager.createQuery(
+				"SELECT h FROM HotelReservation h where h.hotelReservationId.clientId=:clientId "
+				+ "and h.hotelReservationId.hotelId=:hotelId",
+				HotelReservation.class)
+				.setParameter("clientId",c.getId().toString())
+				.setParameter("hotelId", h.getId().toString());
+		
+		return hr;
 	}
 
+	
+
+	
 	
 }
