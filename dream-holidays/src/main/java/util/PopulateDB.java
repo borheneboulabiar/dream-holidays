@@ -53,7 +53,18 @@ public class PopulateDB {
 		client.setEmail("borhene@gmail.com");
 		client.setFirstName("borhene");
 		client.setLastName("boulabiar");
-		client.setNIC("09178626");
+		client.setNIC("06489315");
+		
+		Address address1 = new Address();
+		address.setCountry("Tunisia");
+		address.setStreet("Ariana");
+		
+		Client client1 = new Client();
+		client.setAddress(address1);
+		client.setEmail("nouha@gmail.com");
+		client.setFirstName("nouha");
+		client.setLastName("ouerheni");
+		client.setNIC("07895562");
 		
 		Flight flight = new Flight();
 		SimpleDateFormat dt =new SimpleDateFormat("dd.MM.yyyy");
