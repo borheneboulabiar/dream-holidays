@@ -18,13 +18,13 @@ public interface HotelManagementRemote {
 	void UpdateHotel(Hotel hotel);
 	List<Hotel> findAllHotels();
 	Hotel SearchHotelById(int id);
-	List<Hotel> SearchHotelByStars(int numberOfStars);
-	List<Hotel> SearchHotelByCountry(Address adr);
+	List<Hotel> SearchHotelsByStars(int numberOfStars);
+	List<Hotel> SearchHotelsByCountry(Address adr);
 	
 	void AddReservation(HotelReservation hr); 
-	void DeleteReservation(int id); 
-	void UpdateReservation(HotelReservation hr);
-	
+	void DeleteReservation(Client c, Hotel h); 
+	void UpdateReservation(Client c, Hotel h);
+	HotelReservation SearchReservationByHotelClient(Client c , Hotel h);
 	
 	
 	
