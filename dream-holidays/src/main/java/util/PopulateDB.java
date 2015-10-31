@@ -1,5 +1,6 @@
 package util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -43,12 +44,31 @@ public class PopulateDB {
 		entityManager.persist(aeroport1);
 		entityManager.persist(aeroport2);
 		
+		Address address = new Address();
+		address.setCountry("Tunisia");
+		address.setStreet("Soliman");
+		
+		Client client = new Client();
+		client.setAddress(address);
+		client.setEmail("borhene@gmail.com");
+		client.setFirstName("borhene");
+		client.setLastName("boulabiar");
+		client.setNIC("09178626");
+		
 		Flight flight = new Flight();
-		flight.setArrivalDate(new Date(115,10,15));
-		flight.setDepartureDate(new Date(115, 11, 10));
-		flight.setNumberOfPlaces(4);
-		flight.setAeroport(aeroport);
-		entityManager.persist(flight);
+		SimpleDateFormat dt =new SimpleDateFormat("dd.mm.yyyy");
+		try {
+			Date arrivalDate=dt.parse("11.10.2015");
+			Date departureDate=dt.parse("11.11.2015");
+			flight.setArrivalDate(arrivalDate);
+			flight.setDepartureDate(departureDate);
+			flight.setNumberOfPlaces(4);
+			flight.setAeroport(aeroport);
+			entityManager.persist(flight);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Car car = new Car();
 		car.setMark("Volkswagen");
