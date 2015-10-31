@@ -56,7 +56,7 @@ public class PopulateDB {
 		client.setNIC("09178626");
 		
 		Flight flight = new Flight();
-		SimpleDateFormat dt =new SimpleDateFormat("dd.mm.yyyy");
+		SimpleDateFormat dt =new SimpleDateFormat("dd.MM.yyyy");
 		try {
 			Date arrivalDate=dt.parse("11.10.2015");
 			Date departureDate=dt.parse("11.11.2015");
@@ -65,6 +65,20 @@ public class PopulateDB {
 			flight.setNumberOfPlaces(4);
 			flight.setAeroport(aeroport);
 			entityManager.persist(flight);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Flight flight1 = new Flight();
+		
+		try {
+			Date arrivalDate=dt.parse("11.11.2015");
+			Date departureDate=dt.parse("11.12.2015");
+			flight1.setArrivalDate(arrivalDate);
+			flight1.setDepartureDate(departureDate);
+			flight1.setNumberOfPlaces(16);
+			flight1.setAeroport(aeroport1);
+			entityManager.persist(flight1);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
