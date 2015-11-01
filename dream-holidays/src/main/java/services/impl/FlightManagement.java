@@ -165,4 +165,19 @@ public class FlightManagement implements FlightManagementRemote,
 		
 	}
 
+	@Override
+	public List<Flight> findFlightsByTowns(String DepartureTown,
+			String DestinationTown) {
+		//String jpql1 = "select f from Flight f where departureTown=:param1 and DepartureDate=:param2";
+		//Query query1 = entityManager.createQuery(jpql1);
+		//query1.setParameter("param1", ArrivalDate);
+		//query1.setParameter("param2", DepartureDate);
+		//query1.getResultList();
+		String jpql = "select f from Flight f join f.aeroport a where f.departureTown=:param1 and a.town=:param2";
+		Query query = entityManager.createQuery(jpql);
+		query.setParameter("param1", DepartureTown);
+		query.setParameter("param2", DestinationTown);
+		return query.getResultList();
+	}
+
 }

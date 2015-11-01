@@ -39,7 +39,7 @@ public class PopulateDB {
 		Aeroport aeroport1 = new Aeroport();
 		aeroport1.setTown("Paris");
 		Aeroport aeroport2 = new Aeroport();
-		aeroport2.setTown("Rome");
+		aeroport2.setTown("Tunis");
 		entityManager.persist(aeroport);
 		entityManager.persist(aeroport1);
 		entityManager.persist(aeroport2);
@@ -54,17 +54,19 @@ public class PopulateDB {
 		client.setFirstName("borhene");
 		client.setLastName("boulabiar");
 		client.setNIC("06489315");
+		entityManager.persist(client);
 		
 		Address address1 = new Address();
-		address.setCountry("Tunisia");
-		address.setStreet("Ariana");
+		address1.setCountry("Tunisia");
+		address1.setStreet("Ariana");
 		
 		Client client1 = new Client();
-		client.setAddress(address1);
-		client.setEmail("nouha@gmail.com");
-		client.setFirstName("nouha");
-		client.setLastName("ouerheni");
-		client.setNIC("07895562");
+		client1.setAddress(address1);
+		client1.setEmail("nouha@gmail.com");
+		client1.setFirstName("nouha");
+		client1.setLastName("ouerheni");
+		client1.setNIC("07895562");
+		entityManager.persist(client1);
 		
 		Flight flight = new Flight();
 		SimpleDateFormat dt =new SimpleDateFormat("dd.MM.yyyy");
@@ -74,7 +76,8 @@ public class PopulateDB {
 			flight.setArrivalDate(arrivalDate);
 			flight.setDepartureDate(departureDate);
 			flight.setNumberOfPlaces(4);
-			flight.setAeroport(aeroport);
+			flight.setDepartureTown("Tunis");
+			flight.setAeroport(aeroport1);
 			entityManager.persist(flight);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -88,7 +91,8 @@ public class PopulateDB {
 			flight1.setArrivalDate(arrivalDate);
 			flight1.setDepartureDate(departureDate);
 			flight1.setNumberOfPlaces(16);
-			flight1.setAeroport(aeroport1);
+			flight1.setDepartureTown("Paris");
+			flight1.setAeroport(aeroport);
 			entityManager.persist(flight1);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

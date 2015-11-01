@@ -21,6 +21,7 @@ public class Flight implements Serializable {
 	private Date departureDate;
 	private Date arrivalDate;
 	private Integer numberOfPlaces;
+	private String departureTown;
 
 	private List<FlightReservation> reservationsFlight;
 	private List<Position> positions;
@@ -89,6 +90,14 @@ public class Flight implements Serializable {
 
 	public void setNumberOfPlaces(Integer numberOfPlaces) {
 		this.numberOfPlaces = numberOfPlaces;
+	}
+
+	public String getDepartureTown() {
+		return departureTown;
+	}
+
+	public void setDepartureTown(String departureTown) {
+		this.departureTown = departureTown;
 	}
 
 }
