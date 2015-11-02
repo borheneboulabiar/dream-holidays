@@ -33,8 +33,13 @@ public class FlightManagementDelegate {
 			Date DepartureDate) {
 		return getProxy().findFlightByDate(ArrivalDate, DepartureDate);
 	}
+	public static List<Flight> doFindFlightsByTowns(String DepartureTown,
+			String DestinationTown) {
+		return getProxy().findFlightsByTowns(DepartureTown, DestinationTown);
+	}
 
-	public static Boolean doAddFlightReservation(FlightReservation reservation) {
-		return getProxy().addFlightReservation(reservation);
+
+	public static Boolean doAddFlightReservation(Integer flightId, Integer clientId, String seat) {
+		return getProxy().addFlightReservation(flightId,clientId,seat);
 	}
 }
