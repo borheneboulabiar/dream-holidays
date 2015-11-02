@@ -9,21 +9,17 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import delegate.HotelManagementDelegate;
+import entities.Address;
+import entities.Hotel;
 
 public class HotelTest {
 
 	HotelManagementDelegate hd;
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
 
 	@Before
 	public void setUp() throws Exception {
+		
 		hd=new HotelManagementDelegate();
 	}
 
@@ -32,8 +28,17 @@ public class HotelTest {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testaddHotel() {
+		
+		Address a=new Address();
+		a.setCountry("Tunisia");
+		a.setStreet("Gamarth");
+		Hotel h =new Hotel();
+		h.setName("Hotel Palace");
+		h.setNumberofStars(5);
+		h.setPhoneNumber(71987456);
+		h.setAddress(a);
+		HotelManagementDelegate.doAddHotel(h);
 	}
 
 }
