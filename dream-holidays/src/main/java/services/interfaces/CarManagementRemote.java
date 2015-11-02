@@ -11,12 +11,15 @@ import entities.Contract;
 @Remote
 public interface CarManagementRemote {
 	
-	/* ADD */
+	
 	Boolean AddCar(Car car);
+	Boolean DeleteCar(Integer id);
+	Boolean UpdateCar(Integer id,String newModel, String newMark);
+	
 	Boolean addClient(Client client);
 	Boolean addContract(Contract contract);
+	Boolean deleteContract(Integer id);
 	
-	/* CAR */
 	List<Car> findAllCars();
 	Car findCarById(int id);
 	List<Car> findCarByModel(String model);
@@ -24,8 +27,6 @@ public interface CarManagementRemote {
 	List<String> findAllModelsOfCar();
 	List<String> findAllMarkOfCar();
 	
-	
-	/* CONTRACT */
 	List<Contract> findAllContracts();
 	List<Contract> findContractsByCarId(Integer id);
 	List<Contract> findContractsByCarMark(String mark);

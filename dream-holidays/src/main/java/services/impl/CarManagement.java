@@ -46,16 +46,44 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 
 	@Override
 	public Boolean AddCar(Car car) {
-		Boolean add = true;
+		Boolean add = false;
 		try{
 			entityManager.persist(car);
+			add = true;
 		}catch(Exception e){
-			add = false;
+			System.err.println("Problem adding car ...");
 		}
 		return add;
 		
 	}
+	
+	@Override
+	public Boolean DeleteCar(Integer id) {
+		Boolean delete = false;
+		try {
+			entityManager.remove(entityManager.merge(entityManager.find(Car.class, id)));
+			delete = true;
+		} catch (Exception e) {
+			System.err.println("Problem deleting ...");
+		}
+		return delete;
+	}
 
+	@Override
+	public Boolean UpdateCar(Integer id, String newModel, String newMark) {
+		Boolean update = false;
+		try {
+			Car carFound = entityManager.find(Car.class, id);
+			carFound.setMark(newMark);
+			carFound.setModel(newModel);
+			entityManager.merge(carFound);
+			update = true;
+		} catch (Exception e) {
+			System.err.println("Problem updating ...");
+		}
+		return update;
+	}
+	
 	@Override
 	public List<Car> findCarByModel(String model) {
 		TypedQuery<Car> query = entityManager.createQuery
@@ -151,6 +179,12 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 			list.add(car.getMark());
 		}
 		return list;
+	}
+	
+	@Override
+	public Boolean deleteContract(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -32,6 +32,7 @@ public class FlightManagement implements FlightManagementRemote,
 		// TODO Auto-generated constructor stub
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Flight> findAllFlights() {
 		String jpql = "select f from Flight f";
@@ -50,6 +51,7 @@ public class FlightManagement implements FlightManagementRemote,
 		return flight;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Flight> findFlightByDate(Date ArrivalDate, Date DepartureDate) {
 		String jpql = "select f from Flight f where ArrivalDate=:param1 and DepartureDate=:param2";

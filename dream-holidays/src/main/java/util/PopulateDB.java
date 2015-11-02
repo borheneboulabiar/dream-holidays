@@ -12,8 +12,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 
+
+
+import entities.Address;
 import entities.Aeroport;
 import entities.Car;
+import entities.Client;
 import entities.Flight;
 
 @Singleton

@@ -19,7 +19,12 @@ public class CarManagementDelegate {
 	public static Boolean doAddCar(Car car){
 		return getProxy().AddCar(car);
 	}
-	
+	public static Boolean doUpdateCar(Integer id, String newModel, String newMark){
+		return getProxy().UpdateCar(id, newModel, newMark);
+	}
+	public static Boolean doDeleteCar(Integer id){
+		return getProxy().DeleteCar(id);
+	}
 	public static List<Car> doFindAllCars(){
 		return getProxy().findAllCars();
 	}
