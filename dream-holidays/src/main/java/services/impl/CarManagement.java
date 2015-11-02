@@ -183,8 +183,20 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	
 	@Override
 	public Boolean deleteContract(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		Boolean delete = false;
+		try {
+			entityManager.remove(entityManager.merge(entityManager.find(Contract.class, id)));
+			delete = true;
+		} catch (Exception e) {
+			System.err.println("Problem deleting ..");
+		}
+		return delete;
+	}
+
+	@Override
+	public Contract findContractById(Integer id) {
+		
+		return entityManager.find(Contract.class, id);
 	}
 
 }
