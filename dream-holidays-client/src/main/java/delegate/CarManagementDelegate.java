@@ -3,6 +3,7 @@ package delegate;
 import java.util.List;
 
 import entities.Car;
+import entities.Client;
 import entities.Contract;
 import locator.ServiceLocator;
 import services.interfaces.CarManagementRemote;
@@ -15,12 +16,24 @@ public class CarManagementDelegate {
 		return (CarManagementRemote) ServiceLocator.getInstance().getProxy(jndiName);
 	}
 	
+	public static Boolean doAddCar(Car car){
+		return getProxy().AddCar(car);
+	}
+	
+	public static Boolean doUpdateCar(Integer id, String newModel, String newMark){
+		return getProxy().UpdateCar(id, newModel, newMark);
+	}
+	
+	public static Boolean doDeleteCar(Integer id){
+		return getProxy().DeleteCar(id);
+	}
+	
 	public static List<Car> doFindAllCars(){
 		return getProxy().findAllCars();
 	}
 	
-	public static Boolean doAddCar(Car car){
-		return getProxy().AddCar(car);
+	public static Car doFindCarById(Integer id){
+		return getProxy().findCarById(id);
 	}
 	
 	public static List<Car> doFindCarByModel(String model){
@@ -30,11 +43,22 @@ public class CarManagementDelegate {
 	public static List<Car> doFindCarByMark(String mark){
 		return getProxy().findCarByMark(mark);
 	}
-	
-	public static Car doFindCarById(Integer id){
-		return getProxy().findCarById(id);
+
+	public static List<String> doFindAllModelsOfCar(){
+		return getProxy().findAllModelsOfCar();
 	}
 	
+	public static List<String> doFindAllMarkOfCar(){
+		return getProxy().findAllMarkOfCar();
+	}
+	
+	public static List<Contract> doFindAllContracts(){
+		return getProxy().findAllContracts();
+	}
+	
+	public Contract doFindContractById(Integer id){
+		return getProxy().findContractById(id);
+	}
 	public static List<Contract> doFindContractsByCarId(Integer id){
 		return getProxy().findContractsByCarId(id);
 	}
@@ -47,11 +71,17 @@ public class CarManagementDelegate {
 		return getProxy().findContractsByCarModel(model);
 	}
 	
-	public static Boolean doAddContrct(Contract contract){
+	public static Boolean doAddContract(Contract contract){
 		return getProxy().addContract(contract);
 	}
 	
-	public static List<Contract> doFindAllContracts(){
-		return getProxy().findAllContracts();
+	public static Boolean doDeleteContract(Integer id){
+		return getProxy().deleteContract(id);
 	}
+	
+	public static Boolean doAddClient(Client client){
+		return getProxy().addClient(client);
+	}
+	
+	
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import delegate.FlightManagementDelegate;
+import entities.Client;
 import entities.Flight;
 
 public class TestMain {
@@ -31,12 +32,8 @@ public class TestMain {
 					System.out.println("1.1 : List All Flights");
 					System.out.println("1.2 : Search Flights By Date");
 					System.out.println("1.3 : Search Flights By Towns");
-					System.out.println("1.4 : Update Flight");
-					System.out.println("1.5 : List All Flights Reservations");
-					System.out.println("1.6 : Add Flight Reservation");
-					System.out.println("1.7 : Delete Flight Reservation");
-					System.out.println("1.8 : Update Flight Reservation");
-					System.out.println("1.9 : List All Flights");
+					System.out.println("1.4 : Add Flight Reservation");
+					System.out.println("1.5 : Delete Flight Reservation");
 					scan= new Scanner(System.in);
 					String choice2 = scan.nextLine();
 					List<Flight> flights = null;
@@ -119,7 +116,7 @@ public class TestMain {
 							break;
 						}
 						break;
-					case "6":
+					case "4":
 						scan = new Scanner(System.in);
 						System.out.println("Enter the client Identifier");
 						String clientId = scan.nextLine();
@@ -131,13 +128,55 @@ public class TestMain {
 						i = Integer.parseInt(clientId); 
 						j = Integer.parseInt(flightId);
 						Boolean test=false;
+						Boolean test2=false;
+						Flight flight = FlightManagementDelegate.doFindFlightById(j);
+						//Client client = FlightManagementDelegate.doFindClienById(i);
+						if (flight.getNumberOfPlaces()==0)
+						{
+							System.out.println("There is no more places");
+						}
+						else
+						{
 						test = FlightManagementDelegate.doAddFlightReservation(i, j, seat);
 						if(test)
 						{
 							System.out.println("The flight reservation has been added");
+							test2 = FlightManagementDelegate.doUpdateFlight(j);
 						}
 						else
 							System.out.println("There is a problem of adding this float reservation");
+						}
+						System.out.println("You want to continue on the current menu ... ?");
+						scan= new Scanner(System.in);
+						choice3 = scan.nextLine();
+						switch(choice3){
+						case "yes":
+							sousmenu=true;
+							break;
+						case "no":
+							sousmenu=false;
+							menu = false;
+							break;
+						}
+						break;
+					case "5":
+						scan = new Scanner(System.in);
+						System.out.println("Enter the client Identifier");
+						String clientId1 = scan.nextLine();
+						System.out.println("Enter the flight Identifier");
+						String flightId1 = scan.nextLine(); 
+						
+						int k,l;
+						k = Integer.parseInt(clientId1); 
+						l = Integer.parseInt(flightId1);
+						Boolean test1=false;
+						//test1 = FlightManagementDelegate.doDeleteReservation(k,l);
+						if(test1)
+						{
+							System.out.println("The flight reservation has been removed");
+						}
+						else
+							System.out.println("There is a problem of deleting this float reservation");
 						System.out.println("You want to continue on the current menu ... ?");
 						scan= new Scanner(System.in);
 						choice3 = scan.nextLine();

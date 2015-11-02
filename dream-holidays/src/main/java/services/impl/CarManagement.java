@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import entities.Car;
+import entities.Client;
 import entities.Contract;
 import services.interfaces.CarManagementLocal;
 import services.interfaces.CarManagementRemote;
@@ -45,16 +46,44 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 
 	@Override
 	public Boolean AddCar(Car car) {
-		Boolean add = true;
+		Boolean add = false;
 		try{
 			entityManager.persist(car);
+			add = true;
 		}catch(Exception e){
-			add = false;
+			System.err.println("Problem adding car ...");
 		}
 		return add;
 		
 	}
+	
+	@Override
+	public Boolean DeleteCar(Integer id) {
+		Boolean delete = false;
+		try {
+			entityManager.remove(entityManager.merge(entityManager.find(Car.class, id)));
+			delete = true;
+		} catch (Exception e) {
+			System.err.println("Problem deleting ...");
+		}
+		return delete;
+	}
 
+	@Override
+	public Boolean UpdateCar(Integer id, String newModel, String newMark) {
+		Boolean update = false;
+		try {
+			Car carFound = entityManager.find(Car.class, id);
+			carFound.setMark(newMark);
+			carFound.setModel(newModel);
+			entityManager.merge(carFound);
+			update = true;
+		} catch (Exception e) {
+			System.err.println("Problem updating ...");
+		}
+		return update;
+	}
+	
 	@Override
 	public List<Car> findCarByModel(String model) {
 		TypedQuery<Car> query = entityManager.createQuery
@@ -65,18 +94,20 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Car> findCarByMark(String mark) {
-		TypedQuery<Car> query = entityManager.createQuery
-				("SELECT c from "+Car.class.getSimpleName()+" c where c.Mark = :param",Car.class)
+		Query query = entityManager.createQuery
+				("SELECT c from " + Car.class.getSimpleName() + " c where c.Mark = :param")
 				.setParameter("param", mark);
 		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Contract> findContractsByCarId(Integer id) {
-		TypedQuery<Contract> query = entityManager.createQuery
-				("SELECT c FROM Contract where c.car = :param",Contract.class)
+		Query query = entityManager.createQuery
+				("SELECT c FROM Contract where c.car = :param")
 				.setParameter("param", id);
 		return query.getResultList();
 	}
@@ -113,6 +144,59 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	public List<Contract> findAllContracts() {
 		
 		return entityManager.createQuery("SELECT c from Contract c").getResultList();
+	}
+
+	@Override
+	public Boolean addClient(Client client) {
+		Boolean add = true;
+		try {
+			entityManager.persist(client);
+		} catch (Exception e) {
+			add = false;
+		}
+		return add;
+	}
+
+	@SuppressWarnings("null")
+	@Override
+	public List<String> findAllModelsOfCar() {
+		List<String> list = null;
+		List<Car> cars = entityManager.createQuery("select c from Car c",Car.class).getResultList();
+		for (Car car : cars) {
+			if(!list.contains(car.getModel()))
+			list.add(car.getModel());
+		}
+		return list; 
+	}
+
+	@SuppressWarnings("null")
+	@Override
+	public List<String> findAllMarkOfCar() {
+		List<String> list = null;
+		List<Car> cars = entityManager.createQuery("select c from Car c",Car.class).getResultList();
+		for (Car car : cars) {
+			if(!list.contains(car.getMark()))
+			list.add(car.getMark());
+		}
+		return list;
+	}
+	
+	@Override
+	public Boolean deleteContract(Integer id) {
+		Boolean delete = false;
+		try {
+			entityManager.remove(entityManager.merge(entityManager.find(Contract.class, id)));
+			delete = true;
+		} catch (Exception e) {
+			System.err.println("Problem deleting ..");
+		}
+		return delete;
+	}
+
+	@Override
+	public Contract findContractById(Integer id) {
+		
+		return entityManager.find(Contract.class, id);
 	}
 
 }

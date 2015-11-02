@@ -32,6 +32,7 @@ public class FlightManagement implements FlightManagementRemote,
 		// TODO Auto-generated constructor stub
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Flight> findAllFlights() {
 		String jpql = "select f from Flight f";
@@ -50,6 +51,7 @@ public class FlightManagement implements FlightManagementRemote,
 		return flight;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Flight> findFlightByDate(Date ArrivalDate, Date DepartureDate) {
 		String jpql = "select f from Flight f where ArrivalDate=:param1 and DepartureDate=:param2";
@@ -116,20 +118,7 @@ public class FlightManagement implements FlightManagementRemote,
 		
 	}
 
-	@Override
-	public Boolean UpdateFlight(Flight flight) {
-		Boolean b = false;
-		try {
-			entityManager.merge(findFlightById(flight.getId()));
-			b = true;
-		} catch (Exception e) {
-			System.err.println("problem ...");
-		}
-		return b;
-		
-		
-	}
-
+	
 	@Override
 	public Boolean DeleteReservation(Client c, Flight f) {
 		Boolean b = false;
@@ -184,6 +173,18 @@ public class FlightManagement implements FlightManagementRemote,
 		query.setParameter("param1", DepartureTown);
 		query.setParameter("param2", DestinationTown);
 		return query.getResultList();
+	}
+
+	@Override
+	public Boolean UpdateFlight(Integer flightId) {
+		Boolean b = false;
+		try {
+			entityManager.merge(flightId);
+			b = true;
+		} catch (Exception e) {
+			System.err.println("problem ...");
+		}
+		return b;
 	}
 
 }

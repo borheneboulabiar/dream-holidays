@@ -11,11 +11,13 @@ import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+
+
+
 import entities.Address;
 import entities.Aeroport;
 import entities.Car;
 import entities.Client;
-import entities.Contract;
 import entities.Flight;
 
 @Singleton
@@ -108,27 +110,6 @@ public class PopulateDB {
 		car1.setMark("Volkswagen");
 		car1.setModel("Polo 5");
 		entityManager.persist(car1);
-		
-		/*
-		Address address = new Address();
-		address.setCountry("Tunisia");
-		address.setStreet("14 rue mexique");
-		
-		
-		Client client = new Client();
-		client.setAddress(address);
-		client.setEmail("hm@web2code.com");
-		client.setFirstName("hwas");
-		client.setLastName("majd");
-		client.setNIC("09178626");
-		
-		entityManager.persist(client);
-		
-		Contract contract = new Contract();
-		//contract.setCar(entityManager.find(Car.class, 1));
-		contract.setClient(client);
-		entityManager.persist(contract);
-		*/
 		
 		
 	}
