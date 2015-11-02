@@ -3,6 +3,7 @@ package delegate;
 import java.util.List;
 
 import entities.Car;
+import entities.Client;
 import entities.Contract;
 import locator.ServiceLocator;
 import services.interfaces.CarManagementRemote;
@@ -15,12 +16,16 @@ public class CarManagementDelegate {
 		return (CarManagementRemote) ServiceLocator.getInstance().getProxy(jndiName);
 	}
 	
+	public static Boolean doAddCar(Car car){
+		return getProxy().AddCar(car);
+	}
+	
 	public static List<Car> doFindAllCars(){
 		return getProxy().findAllCars();
 	}
 	
-	public static Boolean doAddCar(Car car){
-		return getProxy().AddCar(car);
+	public static Car doFindCarById(Integer id){
+		return getProxy().findCarById(id);
 	}
 	
 	public static List<Car> doFindCarByModel(String model){
@@ -30,9 +35,13 @@ public class CarManagementDelegate {
 	public static List<Car> doFindCarByMark(String mark){
 		return getProxy().findCarByMark(mark);
 	}
+
+	public static List<String> doFindAllModelsOfCar(){
+		return getProxy().findAllModelsOfCar();
+	}
 	
-	public static Car doFindCarById(Integer id){
-		return getProxy().findCarById(id);
+	public static List<String> doFindAllMarkOfCar(){
+		return getProxy().findAllMarkOfCar();
 	}
 	
 	public static List<Contract> doFindContractsByCarId(Integer id){
@@ -47,11 +56,17 @@ public class CarManagementDelegate {
 		return getProxy().findContractsByCarModel(model);
 	}
 	
-	public static Boolean doAddContrct(Contract contract){
+	public static Boolean doAddContract(Contract contract){
 		return getProxy().addContract(contract);
 	}
 	
 	public static List<Contract> doFindAllContracts(){
 		return getProxy().findAllContracts();
 	}
+	
+	public static Boolean doAddClient(Client client){
+		return getProxy().addClient(client);
+	}
+	
+	
 }

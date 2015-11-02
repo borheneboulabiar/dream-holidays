@@ -10,7 +10,7 @@ public class testAddContract {
 		Contract contract = new Contract();
 		contract.setPrice(200.0);
 		contract.setCar(CarManagementDelegate.doFindCarById(1));
-		CarManagementDelegate.doAddContrct(contract);
+		CarManagementDelegate.doAddContract(contract);
 
 	}
 
