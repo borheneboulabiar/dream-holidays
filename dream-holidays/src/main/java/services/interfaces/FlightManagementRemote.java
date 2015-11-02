@@ -18,7 +18,7 @@ public interface FlightManagementRemote {
 	
 	Boolean AddFlight(Flight flight);
 	Boolean DeleteFlight(int id);
-	Boolean UpdateFlight(Flight flight);
+	Boolean UpdateFlight(Integer flightId);
 	List<Flight> findAllFlights();
 	Flight findFlightById(Integer id);
 	List<Flight> findFlightByDate(Date ArrivalDate,Date DepartureDate);
