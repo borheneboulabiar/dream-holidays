@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -12,6 +14,7 @@ import entities.Address;
 import entities.Client;
 import entities.Hotel;
 import entities.HotelReservation;
+import entities.Room;
 import services.interfaces.HotelManagementLocal;
 import services.interfaces.HotelManagementRemote;
 
@@ -88,8 +91,8 @@ public class HotelManagement implements HotelManagementRemote,
 	@Override
 	public List<Hotel> SearchHotelsByCountry(Address adr) {
 		TypedQuery<Hotel> query = entityManager.createQuery(
-				"SELECT h FROM Hotel h where country=:country",
-				Hotel.class).setParameter("country", adr.getCountry());
+				"SELECT h FROM Hotel h where country like :country",
+				Hotel.class).setParameter("country","%"+ adr.getCountry()+"%");
 		;
 
 		List<Hotel> list = query.getResultList();
@@ -128,6 +131,74 @@ public class HotelManagement implements HotelManagementRemote,
 				.setParameter("hotelId", h.getId().toString());
 		
 		return hr;
+	}
+
+	@Override
+	public Hotel SearchHotelByName(String name) {
+		Hotel hotel=null;
+	
+		try {
+			TypedQuery<Hotel> query = entityManager.createQuery(
+					"SELECT h FROM Hotel h where name like :name",
+					Hotel.class).setParameter("name","%"+ name+"%");
+			
+
+			hotel = query.getSingleResult();
+			
+		} catch (NoResultException e) {
+			System.out.println("l'hotel n'existe pas ");
+		} catch (NonUniqueResultException e) {
+			System.out.println("il y'a plusieurs hotels avec le nom saisie");
+		}
+		return hotel;
+
+		
+	}
+
+	@Override
+	public List<Room> GetPricesRoomForHotel(String name) {
+		
+		List<Room> rooms=null;
+		
+		try {
+			TypedQuery<Room> query = entityManager.createQuery(
+					"SELECT r FROM Room r, Hotel h where h.id=r.hotelid and h.name like :name",
+					Room.class).setParameter("name","%"+ name+"%");
+			
+
+			rooms = query.getResultList();
+			
+		} catch (NoResultException e) {
+			System.out.println("l'hotel n'existe pas ");
+		} 
+		
+		return rooms;
+	}
+
+	@Override
+	public String GetStateForResravation(Client c, Hotel h) {
+		
+		HotelReservation hr = (HotelReservation) entityManager.createQuery(
+				"SELECT h FROM HotelReservation h where h.hotelReservationId.clientId=:clientId "
+				+ "and h.hotelReservationId.hotelId=:hotelId",
+				HotelReservation.class)
+				.setParameter("clientId",c.getId().toString())
+				.setParameter("hotelId", h.getId().toString());
+		
+		return hr.getState();
+	}
+
+	@Override
+	public int GetNumberOfBedForReservation(Client c, Hotel h) {
+		HotelReservation hr = (HotelReservation) entityManager.createQuery(
+				"SELECT h FROM HotelReservation h where h.hotelReservationId.clientId=:clientId "
+				+ "and h.hotelReservationId.hotelId=:hotelId",
+				HotelReservation.class)
+				.setParameter("clientId",c.getId().toString())
+				.setParameter("hotelId", h.getId().toString());
+		
+		return hr.getNumberOfBed();
+		
 	}
 
 	
