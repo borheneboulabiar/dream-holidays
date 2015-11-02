@@ -26,8 +26,10 @@ public interface HotelManagementLocal {
 	void AddReservation(HotelReservation hr); 
 	void DeleteReservation(Client c, Hotel h); 
 	void UpdateReservation(Client c, Hotel h);
-	HotelReservation SearchReservationByHotelClient(Client c , Hotel h);
-	String GetStateForResravation(Client c,Hotel h);
-	int GetNumberOfBedForReservation(Client c,Hotel h);
+	HotelReservation SearchDetailReservationByHotelClient(Client c , Hotel h);
+	List<HotelReservation> GetReservationsNow(Hotel h);
+	
+	List<Hotel> getHotelsWithRoomPrice(float price);
+	List<Hotel> getHotelsWithMaxRoomPrice(float price);
 	
 }
