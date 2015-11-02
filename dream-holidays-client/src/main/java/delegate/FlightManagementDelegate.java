@@ -42,4 +42,9 @@ public class FlightManagementDelegate {
 	public static Boolean doAddFlightReservation(Integer flightId, Integer clientId, String seat) {
 		return getProxy().addFlightReservation(flightId,clientId,seat);
 	}
+	
+	public static Boolean doUpdateFlight(Integer flightId) {
+		return getProxy().UpdateFlight
+				(flightId);
+	}
 }
