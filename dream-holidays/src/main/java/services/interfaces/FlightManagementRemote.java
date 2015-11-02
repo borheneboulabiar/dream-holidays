@@ -24,7 +24,7 @@ public interface FlightManagementRemote {
 	List<Flight> findFlightByDate(Date ArrivalDate,Date DepartureDate);
 	List<Flight> findFlightsByTowns(String DepartureTown, String DestinationTown);
 	FlightReservation findFlightReservationById(Client c, Flight f);
-	Boolean addFlightReservation(FlightReservation flightReservation);
+	Boolean addFlightReservation(Integer flightId, Integer clientId, String seat);
 	Boolean DeleteReservation(Client c, Flight f);
 	Boolean UpdateReservations(FlightReservation flightReservation);
 	Client findClienById(Integer id);

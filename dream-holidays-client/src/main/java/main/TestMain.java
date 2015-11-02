@@ -45,7 +45,7 @@ public class TestMain {
 					   
 						flights = FlightManagementDelegate.doFindAllFlights();
 						for (Flight f : flights) {
-							System.out.println(f.getId()+" | "+f.getNumberOfPlaces());
+							System.out.println(f.getId()+" | "+f.getNumberOfPlaces()+" | "+f.getDepartureDate()+" | "+f.getArrivalDate()+" | "+f.getDepartureTown()+" | "+f.getAeroport().getTown());
 						}
 						System.out.println("You want to continue on the current menu ... ?");
 						scan= new Scanner(System.in);
@@ -76,7 +76,7 @@ public class TestMain {
 							
 							flights = FlightManagementDelegate.doFindFlightByDate(arrivalDate, departureDate);
 							for (Flight f : flights) {
-								System.out.println(" id of flight: " + f.getId());
+								System.out.println(f.getId()+" | "+f.getNumberOfPlaces()+" | "+f.getDepartureDate()+" | "+f.getArrivalDate()+" | "+f.getDepartureTown()+" | "+f.getAeroport().getTown());
 							}
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
@@ -104,7 +104,7 @@ public class TestMain {
 						
 						flights = FlightManagementDelegate.doFindFlightsByTowns(departureTown, destinationTown);
 						for (Flight f : flights) {
-							System.out.println(" id of flight: " + f.getId());
+							System.out.println(f.getId()+" | "+f.getNumberOfPlaces()+" | "+f.getDepartureDate()+" | "+f.getArrivalDate()+" | "+f.getDepartureTown()+" | "+f.getAeroport().getTown());
 						}
 						System.out.println("You want to continue on the current menu ... ?");
 						scan= new Scanner(System.in);
@@ -119,8 +119,37 @@ public class TestMain {
 							break;
 						}
 						break;
-					case "0":
-						sousmenu=false;
+					case "6":
+						scan = new Scanner(System.in);
+						System.out.println("Enter the client Identifier");
+						String clientId = scan.nextLine();
+						System.out.println("Enter the flight Identifier");
+						String flightId = scan.nextLine(); 
+						System.out.println("Enter the seat");
+						String seat = scan.nextLine();
+						int i,j;
+						i = Integer.parseInt(clientId); 
+						j = Integer.parseInt(flightId);
+						Boolean test=false;
+						test = FlightManagementDelegate.doAddFlightReservation(i, j, seat);
+						if(test)
+						{
+							System.out.println("The flight reservation has been added");
+						}
+						else
+							System.out.println("There is a problem of adding this float reservation");
+						System.out.println("You want to continue on the current menu ... ?");
+						scan= new Scanner(System.in);
+						choice3 = scan.nextLine();
+						switch(choice3){
+						case "yes":
+							sousmenu=true;
+							break;
+						case "no":
+							sousmenu=false;
+							menu = false;
+							break;
+						}
 						break;
 					}
 
@@ -197,7 +226,7 @@ public class TestMain {
              break;
 				
 			case "0":
-				System.out.println("0000000000000");
+				System.out.println("Good Bye");
 				menu=false;
 			}
 			

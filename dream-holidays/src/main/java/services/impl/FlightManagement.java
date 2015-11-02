@@ -13,6 +13,7 @@ import services.interfaces.FlightManagementRemote;
 import entities.Client;
 import entities.Flight;
 import entities.FlightReservation;
+import entities.FlightReservationId;
 
 /**
  * Session Bean implementation class FlightManagement
@@ -60,13 +61,18 @@ public class FlightManagement implements FlightManagementRemote,
 	}
 
 	@Override
-	public Boolean addFlightReservation(FlightReservation reservation) {
+	public Boolean addFlightReservation(Integer flightId, Integer clientId, String seat) {
 		Boolean b = false;
 		try {
-			entityManager.persist(reservation);
+			
+			FlightReservationId flightReservationId = new FlightReservationId();
+			flightReservationId.setClientId(clientId);
+			flightReservationId.setFlightId(flightId);
+			FlightReservation flightReservation = new FlightReservation(flightReservationId,seat);
+			entityManager.persist(flightReservation);
+			
 			b = true;
 		} catch (Exception e) {
-			System.err.println("problem ...");
 		}
 		return b;
 	}

@@ -37,6 +37,12 @@ public FlightReservation() {
 	super();
 }
 
+public FlightReservation(Flight flight, Client client) {
+	super();
+	this.flight = flight;
+	this.client = client;
+}
+
 public FlightReservation(FlightReservationId flightReservationId, String seat) {
 	super();
 	this.flightReservationId = flightReservationId;
