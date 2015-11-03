@@ -57,7 +57,7 @@ public class CarManagementDelegate {
 		return getProxy().findAllContracts();
 	}
 	
-	public Contract doFindContractById(ContractId contratId){
+	public static Contract doFindContractById(ContractId contratId){
 		return getProxy().findContractById(contratId);
 	}
 	public static List<Contract> doFindContractsByCarId(Integer id){
@@ -83,6 +83,8 @@ public class CarManagementDelegate {
 	public static Boolean doAddClient(Client client){
 		return getProxy().addClient(client);
 	}
+	
+	
 	
 	
 }
