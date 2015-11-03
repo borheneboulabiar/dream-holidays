@@ -7,6 +7,7 @@ import javax.ejb.Remote;
 import entities.Car;
 import entities.Client;
 import entities.Contract;
+import entities.ContractId;
 
 @Remote
 public interface CarManagementRemote {
@@ -28,7 +29,7 @@ public interface CarManagementRemote {
 	List<String> findAllMarkOfCar();
 	
 	List<Contract> findAllContracts();
-	Contract findContractById(Integer id);
+	Contract findContractById(ContractId contratId);
 	List<Contract> findContractsByCarId(Integer id);
 	List<Contract> findContractsByCarMark(String mark);
 	List<Contract> findContractsByCarModel(String model);

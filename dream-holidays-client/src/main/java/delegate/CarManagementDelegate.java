@@ -5,6 +5,7 @@ import java.util.List;
 import entities.Car;
 import entities.Client;
 import entities.Contract;
+import entities.ContractId;
 import locator.ServiceLocator;
 import services.interfaces.CarManagementRemote;
 
@@ -56,8 +57,8 @@ public class CarManagementDelegate {
 		return getProxy().findAllContracts();
 	}
 	
-	public Contract doFindContractById(Integer id){
-		return getProxy().findContractById(id);
+	public Contract doFindContractById(ContractId contratId){
+		return getProxy().findContractById(contratId);
 	}
 	public static List<Contract> doFindContractsByCarId(Integer id){
 		return getProxy().findContractsByCarId(id);

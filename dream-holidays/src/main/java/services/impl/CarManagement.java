@@ -1,5 +1,6 @@
 package services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -11,6 +12,7 @@ import javax.persistence.TypedQuery;
 import entities.Car;
 import entities.Client;
 import entities.Contract;
+import entities.ContractId;
 import services.interfaces.CarManagementLocal;
 import services.interfaces.CarManagementRemote;
 
@@ -86,8 +88,8 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	
 	@Override
 	public List<Car> findCarByModel(String model) {
-		TypedQuery<Car> query = entityManager.createQuery
-				("Select c from Car c where c.Model =:param",Car.class)
+		Query query = entityManager.createQuery
+				("Select c from Car c where c.model =:param")
 				.setParameter("param", model);
 		
 		return query.getResultList();
@@ -98,7 +100,7 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	@Override
 	public List<Car> findCarByMark(String mark) {
 		Query query = entityManager.createQuery
-				("SELECT c from " + Car.class.getSimpleName() + " c where c.Mark = :param")
+				("SELECT c from " + Car.class.getSimpleName() + " c where c.mark = :param")
 				.setParameter("param", mark);
 		return query.getResultList();
 	}
@@ -107,7 +109,7 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	@Override
 	public List<Contract> findContractsByCarId(Integer id) {
 		Query query = entityManager.createQuery
-				("SELECT c FROM Contract where c.car = :param")
+				("SELECT c FROM Contract c where c.carId = :param")
 				.setParameter("param", id);
 		return query.getResultList();
 	}
@@ -115,7 +117,8 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Contract> findContractsByCarMark(String mark) {
-		Query query = entityManager.createQuery("SELECT co from Car ca JOIN ca.contracts where ca.mark = :param ");
+		Query query = entityManager.createQuery("SELECT co from Car ca "
+				+ " Contract co where ca.id=co.carId and ca.mark = :param ");
 		query.setParameter("param", mark);
 		return query.getResultList();
 	}
@@ -123,7 +126,8 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Contract> findContractsByCarModel(String model) {
-		Query query = entityManager.createQuery("SELECT co from Car ca JOIN ca.contracts where ca.model = :param ");
+		Query query = entityManager.createQuery("SELECT co from Car ca "
+				+ " Contracts co where ca.id=co.carId and ca.model = :param ");
 		query.setParameter("param", model);
 		return query.getResultList();
 	}
@@ -160,24 +164,18 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	@SuppressWarnings("null")
 	@Override
 	public List<String> findAllModelsOfCar() {
-		List<String> list = null;
-		List<Car> cars = entityManager.createQuery("select c from Car c",Car.class).getResultList();
-		for (Car car : cars) {
-			if(!list.contains(car.getModel()))
-			list.add(car.getModel());
-		}
+		List<String> list = new ArrayList<String>();
+		list=entityManager.createQuery("Select distinct c.model from Car c").getResultList();
+		
 		return list; 
 	}
 
 	@SuppressWarnings("null")
 	@Override
 	public List<String> findAllMarkOfCar() {
-		List<String> list = null;
-		List<Car> cars = entityManager.createQuery("select c from Car c",Car.class).getResultList();
-		for (Car car : cars) {
-			if(!list.contains(car.getMark()))
-			list.add(car.getMark());
-		}
+		List<String> list = new ArrayList<String>();
+		list = entityManager.createQuery("select distinct c.mark from Car c").getResultList();
+		
 		return list;
 	}
 	
@@ -194,9 +192,9 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 	}
 
 	@Override
-	public Contract findContractById(Integer id) {
+	public Contract findContractById(ContractId contratId) {
 		
-		return entityManager.find(Contract.class, id);
+		return (Contract) entityManager.find(Contract.class, contratId);
 	}
 
 }
