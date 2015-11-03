@@ -115,24 +115,31 @@ public class PopulateDB {
 		car1.setModel("Polo 5");
 		entityManager.persist(car1);
 		
+		Address address2 = new Address();
+		address.setCountry("Tunisia");
+		address.setStreet("Sousse");
+		
+		Address address3 = new Address();
+		address.setCountry("Tunisia");
+		address.setStreet("Hammamet");
 		
 		Hotel hotel = new Hotel();
 		hotel.setName("Movempick");
 		hotel.setNumberofStars(5);
 		hotel.setPhoneNumber(70555888);
-		hotel.setAddress(address);
+		hotel.setAddress(address2);
 		entityManager.persist(hotel);
+		
 		Hotel hotel1 = new Hotel();
 		hotel1.setName("La Badira");
 		hotel1.setNumberofStars(5);
 		hotel1.setPhoneNumber(72400300);
-		hotel.setAddress(address);
-		HotelReservation hotelReservation = new HotelReservation();
-		hotelReservation.setClient(client1);
-		hotelReservation.setHotel(hotel1);
-		//entityManager.persist(hotelReservation);
+		hotel1.setAddress(address3);
+		entityManager.persist(hotel1);
+		//HotelReservation hotelReservation = new HotelReservation();
+		//hotelReservation.setClient(client1);
+		//hotelReservation.setHotel(hotel1);
 		
-		//entityManager.persist(hotel1);
 	}
 
 }
