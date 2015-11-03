@@ -37,8 +37,15 @@ public class FlightManagementDelegate {
 			String DestinationTown) {
 		return getProxy().findFlightsByTowns(DepartureTown, DestinationTown);
 	}
+	
+	public static FlightReservation doFindFlightReservationById(Integer clientId, Integer flightId) {
+		return getProxy().findFlightReservationById(clientId, flightId);
+	}
+	
 
-
+	public static Boolean doDeleteReservation(Integer clientId, Integer flightId) {
+		return getProxy().DeleteReservation(clientId,flightId);
+	}
 	public static Boolean doAddFlightReservation(Integer flightId, Integer clientId, String seat) {
 		return getProxy().addFlightReservation(flightId,clientId,seat);
 	}
