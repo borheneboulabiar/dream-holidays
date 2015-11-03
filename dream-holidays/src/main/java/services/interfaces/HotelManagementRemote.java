@@ -14,14 +14,14 @@ import entities.Room;
 @Remote
 public interface HotelManagementRemote {
 
-	void AddHotel(Hotel h);
+	boolean AddHotel(Hotel h);
 	void DeleteHotel(int id);
 	void UpdateHotel(Hotel hotel);
 	List<Hotel> findAllHotels();
 	Hotel SearchHotelById(int id);
 	List<Hotel> SearchHotelsByStars(int numberOfStars);
 	List<Hotel> SearchHotelsByCountry(Address adr);
-	Hotel SearchHotelByName(String name);
+	List<Hotel> SearchHotelByName(String name);
 	List<Room> GetPricesRoomForHotel(String name);
 	
 	void AddReservation(HotelReservation hr); 

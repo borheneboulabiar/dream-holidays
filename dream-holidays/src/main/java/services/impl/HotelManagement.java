@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import entities.Address;
@@ -38,9 +39,21 @@ public class HotelManagement implements HotelManagementRemote,
 
 	// Ajout d'un Hotel
 	@Override
-	public void AddHotel(Hotel h) {
-
-		entityManager.persist(h);
+	public boolean AddHotel(Hotel h) {
+		/*try {
+			entityManager.persist(h);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}*/
+		boolean add = false;
+		try{
+			entityManager.persist(h);
+			add = true;
+		}catch(Exception e){
+			System.err.println("Problem adding car ...");
+		}
+		return add;
+		
 
 	}
 
@@ -62,12 +75,16 @@ public class HotelManagement implements HotelManagementRemote,
 	@Override
 	public List<Hotel> findAllHotels() {
 
-		TypedQuery<Hotel> query = entityManager.createQuery(
+		/*TypedQuery<Hotel> query = entityManager.createQuery(
 				"SELECT h FROM Hotel h", Hotel.class);
 
 		List<Hotel> list = query.getResultList();
 
-		return list;
+		return list;*/
+		
+		String jpql = "select h from Hotel h";
+		Query query = entityManager.createQuery(jpql);
+		return query.getResultList();
 
 	}
 
@@ -136,22 +153,22 @@ public class HotelManagement implements HotelManagementRemote,
 	}
 
 	@Override
-	public Hotel SearchHotelByName(String name) {
-		Hotel hotel = null;
+	public List<Hotel> SearchHotelByName(String name) {
+		List<Hotel> hotel ;
 
 		try {
 			TypedQuery<Hotel> query = entityManager.createQuery(
 					"SELECT h FROM Hotel h where name like :name", Hotel.class)
 					.setParameter("name", "%" + name + "%");
 
-			hotel = query.getSingleResult();
+			hotel = query.getResultList();
 
 		} catch (NoResultException e) {
 			System.out.println("l'hotel n'existe pas ");
 		} catch (NonUniqueResultException e) {
 			System.out.println("il y'a plusieurs hotels avec le nom saisie");
 		}
-		return hotel;
+		return null;
 
 	}
 

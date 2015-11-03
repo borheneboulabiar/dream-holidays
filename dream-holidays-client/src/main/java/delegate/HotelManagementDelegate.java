@@ -9,6 +9,7 @@ import entities.Hotel;
 import entities.HotelReservation;
 import entities.Room;
 import locator.ServiceLocator;
+import services.interfaces.FlightManagementRemote;
 import services.interfaces.HotelManagementRemote;
 
 public class HotelManagementDelegate {
@@ -19,6 +20,7 @@ public class HotelManagementDelegate {
 		return (HotelManagementRemote) ServiceLocator.getInstance().getProxy(
 				jndiName);
 	}
+
 	
 	public static List<Hotel> dofindAllHotels() {
 		return getProxy().findAllHotels();
@@ -41,7 +43,7 @@ public class HotelManagementDelegate {
 		return getProxy().SearchHotelsByCountry(adr);
 	}
 	
-	public static Hotel doSearchHotelByName(String name)
+	public static List<Hotel> doSearchHotelByName(String name)
 	{
 		return getProxy().SearchHotelByName(name);
 	}
