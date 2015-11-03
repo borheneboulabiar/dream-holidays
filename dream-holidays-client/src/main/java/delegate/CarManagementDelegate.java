@@ -19,12 +19,15 @@ public class CarManagementDelegate {
 	public static Boolean doAddCar(Car car){
 		return getProxy().AddCar(car);
 	}
+	
 	public static Boolean doUpdateCar(Integer id, String newModel, String newMark){
 		return getProxy().UpdateCar(id, newModel, newMark);
 	}
+	
 	public static Boolean doDeleteCar(Integer id){
 		return getProxy().DeleteCar(id);
 	}
+	
 	public static List<Car> doFindAllCars(){
 		return getProxy().findAllCars();
 	}
@@ -49,6 +52,13 @@ public class CarManagementDelegate {
 		return getProxy().findAllMarkOfCar();
 	}
 	
+	public static List<Contract> doFindAllContracts(){
+		return getProxy().findAllContracts();
+	}
+	
+	public Contract doFindContractById(Integer id){
+		return getProxy().findContractById(id);
+	}
 	public static List<Contract> doFindContractsByCarId(Integer id){
 		return getProxy().findContractsByCarId(id);
 	}
@@ -65,8 +75,8 @@ public class CarManagementDelegate {
 		return getProxy().addContract(contract);
 	}
 	
-	public static List<Contract> doFindAllContracts(){
-		return getProxy().findAllContracts();
+	public static Boolean doDeleteContract(Integer id){
+		return getProxy().deleteContract(id);
 	}
 	
 	public static Boolean doAddClient(Client client){

@@ -28,6 +28,7 @@ public interface CarManagementRemote {
 	List<String> findAllMarkOfCar();
 	
 	List<Contract> findAllContracts();
+	Contract findContractById(Integer id);
 	List<Contract> findContractsByCarId(Integer id);
 	List<Contract> findContractsByCarMark(String mark);
 	List<Contract> findContractsByCarModel(String model);

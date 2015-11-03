@@ -8,12 +8,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import entities.Address;
 import entities.Client;
 import entities.Hotel;
 import entities.HotelReservation;
+import entities.HotelReservationId;
 import entities.Room;
 import services.interfaces.HotelManagementLocal;
 import services.interfaces.HotelManagementRemote;
@@ -37,9 +39,21 @@ public class HotelManagement implements HotelManagementRemote,
 
 	// Ajout d'un Hotel
 	@Override
-	public void AddHotel(Hotel h) {
-
-		entityManager.persist(h);
+	public boolean AddHotel(Hotel h) {
+		/*try {
+			entityManager.persist(h);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}*/
+		boolean add = false;
+		try{
+			entityManager.persist(h);
+			add = true;
+		}catch(Exception e){
+			System.err.println("Problem adding car ...");
+		}
+		return add;
+		
 
 	}
 
@@ -54,19 +68,23 @@ public class HotelManagement implements HotelManagementRemote,
 	public void UpdateHotel(Hotel hotel) {
 
 		entityManager.merge(SearchHotelById(hotel.getId()));
-		//entityManager.merge(hotel);
+		// entityManager.merge(hotel);
 
 	}
 
 	@Override
 	public List<Hotel> findAllHotels() {
 
-		TypedQuery<Hotel> query = entityManager.createQuery(
+		/*TypedQuery<Hotel> query = entityManager.createQuery(
 				"SELECT h FROM Hotel h", Hotel.class);
 
 		List<Hotel> list = query.getResultList();
 
-		return list;
+		return list;*/
+		
+		String jpql = "select h from Hotel h";
+		Query query = entityManager.createQuery(jpql);
+		return query.getResultList();
 
 	}
 
@@ -92,7 +110,8 @@ public class HotelManagement implements HotelManagementRemote,
 	public List<Hotel> SearchHotelsByCountry(Address adr) {
 		TypedQuery<Hotel> query = entityManager.createQuery(
 				"SELECT h FROM Hotel h where country like :country",
-				Hotel.class).setParameter("country","%"+ adr.getCountry()+"%");
+				Hotel.class).setParameter("country",
+				"%" + adr.getCountry() + "%");
 		;
 
 		List<Hotel> list = query.getResultList();
@@ -109,100 +128,128 @@ public class HotelManagement implements HotelManagementRemote,
 
 	@Override
 	public void UpdateReservation(Client c, Hotel h) {
-		
-		entityManager.merge(SearchReservationByHotelClient(c,h));
+
+		entityManager.merge(SearchDetailReservationByHotelClient(c, h));
 
 	}
 
 	@Override
 	public void DeleteReservation(Client c, Hotel h) {
-	
-		entityManager.remove(SearchReservationByHotelClient(c,h));
+
+		entityManager.remove(SearchDetailReservationByHotelClient(c, h));
 	}
 
 	@Override
-	public HotelReservation SearchReservationByHotelClient(Client c, Hotel h) {
+	public HotelReservation SearchDetailReservationByHotelClient(Client c,
+			Hotel h) {
+
+		HotelReservation hr=new HotelReservation();
+		HotelReservationId hri=new HotelReservationId();
+		hri.setClientId(c.getId());
+		hri.setHotelId(h.getId());
+		hr.setHotelReservationId(hri);
 		
-		HotelReservation hr = (HotelReservation) entityManager.createQuery(
-				"SELECT h FROM HotelReservation h where h.hotelReservationId.clientId=:clientId "
-				+ "and h.hotelReservationId.hotelId=:hotelId",
-				HotelReservation.class)
-				.setParameter("clientId",c.getId().toString())
-				.setParameter("hotelId", h.getId().toString());
-		
-		return hr;
+		return  entityManager.find(HotelReservation.class, hr.getHotelReservationId());
 	}
 
 	@Override
-	public Hotel SearchHotelByName(String name) {
-		Hotel hotel=null;
-	
+	public List<Hotel> SearchHotelByName(String name) {
+		List<Hotel> hotel ;
+
 		try {
 			TypedQuery<Hotel> query = entityManager.createQuery(
-					"SELECT h FROM Hotel h where name like :name",
-					Hotel.class).setParameter("name","%"+ name+"%");
-			
+					"SELECT h FROM Hotel h where name like :name", Hotel.class)
+					.setParameter("name", "%" + name + "%");
 
-			hotel = query.getSingleResult();
-			
+			hotel = query.getResultList();
+
 		} catch (NoResultException e) {
 			System.out.println("l'hotel n'existe pas ");
 		} catch (NonUniqueResultException e) {
 			System.out.println("il y'a plusieurs hotels avec le nom saisie");
 		}
-		return hotel;
+		return null;
 
-		
 	}
 
 	@Override
 	public List<Room> GetPricesRoomForHotel(String name) {
-		
-		List<Room> rooms=null;
-		
+
+		List<Room> rooms = null;
+
 		try {
-			TypedQuery<Room> query = entityManager.createQuery(
-					"SELECT r FROM Room r, Hotel h where h.id=r.hotelid and h.name like :name",
-					Room.class).setParameter("name","%"+ name+"%");
-			
+			TypedQuery<Room> query = entityManager
+					.createQuery(
+							"SELECT r FROM Room r, Hotel h where h.id=r.hotelid and h.name like :name",
+							Room.class).setParameter("name", "%" + name + "%");
 
 			rooms = query.getResultList();
-			
+
 		} catch (NoResultException e) {
 			System.out.println("l'hotel n'existe pas ");
-		} 
-		
+		}
+
 		return rooms;
 	}
 
 	@Override
-	public String GetStateForResravation(Client c, Hotel h) {
-		
-		HotelReservation hr = (HotelReservation) entityManager.createQuery(
-				"SELECT h FROM HotelReservation h where h.hotelReservationId.clientId=:clientId "
-				+ "and h.hotelReservationId.hotelId=:hotelId",
-				HotelReservation.class)
-				.setParameter("clientId",c.getId().toString())
-				.setParameter("hotelId", h.getId().toString());
-		
-		return hr.getState();
+	public List<HotelReservation> GetReservationsNow(Hotel h) {
+		List<HotelReservation> hotelsReservation = null;
+
+		try {
+			TypedQuery<HotelReservation> query = entityManager
+					.createQuery(
+							"SELECT hr FROM HotelReservation hr where hr.hotelid=:hotelid and hr.arrivalDate =:sysdate",
+							HotelReservation.class)
+					.setParameter("hotelid", h.getId())
+					.setParameter("sysdate", new Date());
+
+			hotelsReservation = query.getResultList();
+
+		} catch (NoResultException e) {
+			System.out.println("aucune réservation faite aujourd'hui");
+		}
+
+		return hotelsReservation;
 	}
 
 	@Override
-	public int GetNumberOfBedForReservation(Client c, Hotel h) {
-		HotelReservation hr = (HotelReservation) entityManager.createQuery(
-				"SELECT h FROM HotelReservation h where h.hotelReservationId.clientId=:clientId "
-				+ "and h.hotelReservationId.hotelId=:hotelId",
-				HotelReservation.class)
-				.setParameter("clientId",c.getId().toString())
-				.setParameter("hotelId", h.getId().toString());
-		
-		return hr.getNumberOfBed();
-		
+	public List<Hotel> getHotelsWithRoomPrice(float price) {
+		List<Hotel> hotels = null;
+
+		try {
+			TypedQuery<Hotel> query = entityManager
+					.createQuery(
+							"SELECT h FROM Hotel h,Room r where h.id=r.hotelid and r.price=:price",
+							Hotel.class)
+					.setParameter("price", price);
+
+			hotels = query.getResultList();
+
+		} catch (NoResultException e) {
+			System.out.println("aucun hotels avec ce prix");
+		}
+
+		return hotels;
+	}
+	@Override
+	public List<Hotel> getHotelsWithMaxRoomPrice(float price) {
+		List<Hotel> hotels = null;
+
+		try {
+			TypedQuery<Hotel> query = entityManager
+					.createQuery(
+							"SELECT DISTINCT h FROM Hotel h,Room r where h.id=r.hotelid and r.price<:price",
+							Hotel.class)
+					.setParameter("price", price);
+
+			hotels = query.getResultList();
+
+		} catch (NoResultException e) {
+			System.out.println("aucun hotels avec ce prix");
+		}
+
+		return hotels;
 	}
 
-	
-
-	
-	
 }
