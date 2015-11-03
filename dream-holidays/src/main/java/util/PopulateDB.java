@@ -14,11 +14,15 @@ import javax.persistence.PersistenceContext;
 
 
 
+
+
 import entities.Address;
 import entities.Aeroport;
 import entities.Car;
 import entities.Client;
 import entities.Flight;
+import entities.Hotel;
+import entities.HotelReservation;
 
 @Singleton
 @LocalBean
@@ -112,6 +116,23 @@ public class PopulateDB {
 		entityManager.persist(car1);
 		
 		
+		Hotel hotel = new Hotel();
+		hotel.setName("Movempick");
+		hotel.setNumberofStars(5);
+		hotel.setPhoneNumber(70555888);
+		hotel.setAddress(address);
+		entityManager.persist(hotel);
+		Hotel hotel1 = new Hotel();
+		hotel1.setName("La Badira");
+		hotel1.setNumberofStars(5);
+		hotel1.setPhoneNumber(72400300);
+		hotel.setAddress(address);
+		HotelReservation hotelReservation = new HotelReservation();
+		hotelReservation.setClient(client1);
+		hotelReservation.setHotel(hotel1);
+		//entityManager.persist(hotelReservation);
+		
+		//entityManager.persist(hotel1);
 	}
 
 }

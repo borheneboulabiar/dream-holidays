@@ -1,15 +1,19 @@
 package main;
 
-import java.awt.BufferCapabilities.FlipContents;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
+
 import delegate.FlightManagementDelegate;
-import entities.Client;
+import delegate.HotelManagementDelegate;
+import entities.Address;
 import entities.Flight;
+import entities.Hotel;
+import entities.Room;
 
 public class TestMain {
 
@@ -34,7 +38,7 @@ public class TestMain {
 					System.out.println("1.2 : Search Flights By Date");
 					System.out.println("1.3 : Search Flights By Towns");
 					System.out.println("1.4 : Add Flight Reservation");
-					System.out.println("1.5 : Delete Flight Reservation");
+					System.out.println("1.5 : Reset Flight Reservation");
 					scan= new Scanner(System.in);
 					String choice2 = scan.nextLine();
 					List<Flight> flights = null;
@@ -202,20 +206,27 @@ public class TestMain {
              menu=true;
              break;
 			case "3":
+				List<Hotel> hotels;
 				boolean sousmenu1= true;
 				while(sousmenu1)
 				{
 					System.out.println("1.1 : List All Hotels");
-					System.out.println("1.2 : Search Cars By ....");
-					System.out.println("1.3 : Search Cars By .....");
-					
+					System.out.println("1.2 : Search Hotels By Stars");
+					System.out.println("1.3 : Search Hotels By Country");
+					System.out.println("1.4 : Search Hotel By Name");
+					System.out.println("1.5 : Show Room Prices");
+					System.out.println("1.6 : Booking Of Hotel Room");
+					System.out.println("1.7 : Reset Booking");
 					scan= new Scanner(System.in);
 					String choice2 = scan.nextLine();
 					
 					switch(choice2){
 					case "1":
 					   
-						
+						hotels = HotelManagementDelegate.dofindAllHotels();
+						for (Hotel h : hotels) {
+							System.out.println(h.getId()+" | "+h.getName()+" | "+h.getNumberofStars()+" | "+h.getPhoneNumber()+" | "+h.getAddress()+" | ");
+						}
 						System.out.println("You want to continue on the current menu ... ?(yes/no)");
 						scan= new Scanner(System.in);
 						String choice3 = scan.nextLine();
@@ -230,8 +241,13 @@ public class TestMain {
 						}
 						break;
 					case "2":
-						
-						
+						System.out.println("Enter The Number Of Stars");
+						String nbStars = scan.nextLine();
+						Integer m = Integer.parseInt(nbStars);
+						hotels=HotelManagementDelegate.doSearchHotelsByStars(m);
+						for (Hotel h : hotels) {
+							System.out.println(h.getId()+" | "+h.getName()+" | "+h.getNumberofStars()+" | "+h.getPhoneNumber()+" | "+h.getAddress()+" | ");
+						}
 						System.out.println("You want to continue on the current menu ... ?(yes/no)");
 						scan= new Scanner(System.in);
 						choice3 = scan.nextLine();
@@ -246,8 +262,57 @@ public class TestMain {
 						}
 						break;
 					case "3":
+						System.out.println("Enter The Country");
+						String country = scan.nextLine();
+						Address address = new Address();
+						address.setCountry(country);
+						hotels= HotelManagementDelegate.doSearchHotelsByCountry(address);
 						
+						for (Hotel h : hotels) {
+							System.out.println(h.getId()+" | "+h.getName()+" | "+h.getNumberofStars()+" | "+h.getPhoneNumber()+" | "+h.getAddress()+" | ");
+						}
+						System.out.println("You want to continue on the current menu ... ?(yes/no)");
+						scan= new Scanner(System.in);
+						choice3 = scan.nextLine();
+						switch(choice3){
+						case "yes":
+							sousmenu1=true;
+							break;
+						case "no":
+							sousmenu1=false;
+							menu = false;
+							break;
+						}break;
+					case "4":
+						System.out.println("Enter The Hotel Name");
+						String name = scan.nextLine();
 						
+						hotels= HotelManagementDelegate.doSearchHotelByName(name);
+						
+						for (Hotel h : hotels) {
+							System.out.println(h.getId()+" | "+h.getName()+" | "+h.getNumberofStars()+" | "+h.getPhoneNumber()+" | "+h.getAddress()+" | ");
+						}
+						System.out.println("You want to continue on the current menu ... ?(yes/no)");
+						scan= new Scanner(System.in);
+						choice3 = scan.nextLine();
+						switch(choice3){
+						case "yes":
+							sousmenu1=true;
+							break;
+						case "no":
+							sousmenu1=false;
+							menu = false;
+							break;
+						}break;
+					case "5":
+						System.out.println("Enter The Hotel Name");
+						String nameHotel = scan.nextLine();
+						
+						List<Room> rooms = HotelManagementDelegate.doGetPricesRoomForHotel(nameHotel);
+						
+						for (Room r : rooms) {
+							System.out.println(r.getHotelRoomId()+" | "+r.getPrice()+" |");
+						}
 						System.out.println("You want to continue on the current menu ... ?(yes/no)");
 						scan= new Scanner(System.in);
 						choice3 = scan.nextLine();
@@ -280,5 +345,4 @@ public class TestMain {
 		
 
 	}
-
 }
