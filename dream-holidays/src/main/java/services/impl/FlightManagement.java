@@ -120,10 +120,10 @@ public class FlightManagement implements FlightManagementRemote,
 
 	
 	@Override
-	public Boolean DeleteReservation(Client c, Flight f) {
+	public Boolean DeleteReservation(Integer clientId, Integer flightId) {
 		Boolean b = false;
 		try {
-			entityManager.remove(findFlightReservationById(c,f));
+			entityManager.remove(findFlightReservationById(clientId,flightId));
 			b = true;
 		} catch (Exception e) {
 			System.err.println("problem ...");
@@ -144,9 +144,9 @@ public class FlightManagement implements FlightManagementRemote,
 	}
 
 	@Override
-	public FlightReservation findFlightReservationById(Client c, Flight f) {
+	public FlightReservation findFlightReservationById(Integer clientId, Integer flightId) {
 		FlightReservation flightReservation = null;
-		try {
+		/*try {
 			flightReservation = (FlightReservation) entityManager.createQuery(
 					"SELECT f FROM FlightReservation f where f.flightReservationId.clientId=:clientId "
 					+ "and f.flightReservationId.flightId=:flightId",
@@ -155,7 +155,11 @@ public class FlightManagement implements FlightManagementRemote,
 					.setParameter("flightId", f.getId().toString());
 		} catch (Exception e) {
 			System.err.println("problem ...");
-		}
+		}*/
+		FlightReservationId fid=new FlightReservationId();
+		fid.setClientId(clientId);
+		fid.setFlightId(flightId);
+		flightReservation=entityManager.find(FlightReservation.class,fid );
 		return flightReservation;
 		
 	}

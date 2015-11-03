@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.BufferCapabilities.FlipContents;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,7 +45,7 @@ public class TestMain {
 						for (Flight f : flights) {
 							System.out.println(f.getId()+" | "+f.getNumberOfPlaces()+" | "+f.getDepartureDate()+" | "+f.getArrivalDate()+" | "+f.getDepartureTown()+" | "+f.getAeroport().getTown());
 						}
-						System.out.println("You want to continue on the current menu ... ?");
+						System.out.println("You want to continue on the current menu ... ?(yes/no)");
 						scan= new Scanner(System.in);
 						String choice3 = scan.nextLine();
 						switch(choice3){
@@ -61,9 +62,9 @@ public class TestMain {
 						
 						scan = new Scanner(System.in);
 						System.out.println("Enter the departure date");
-						String departuredate = scan.nextLine();
-						System.out.println("Enter the arrival date");
 						String arrivaldate = scan.nextLine();
+						System.out.println("Enter the return date");
+						String departuredate = scan.nextLine();
 						
 						SimpleDateFormat dt =new SimpleDateFormat("dd.MM.yyyy");
 						try {
@@ -72,14 +73,19 @@ public class TestMain {
 							Date departureDate=dt.parse(departuredate);
 							
 							flights = FlightManagementDelegate.doFindFlightByDate(arrivalDate, departureDate);
+							if(flights.isEmpty())
+								System.out.println("There is no flights for these dates");
+							else
+							{
 							for (Flight f : flights) {
 								System.out.println(f.getId()+" | "+f.getNumberOfPlaces()+" | "+f.getDepartureDate()+" | "+f.getArrivalDate()+" | "+f.getDepartureTown()+" | "+f.getAeroport().getTown());
+							}
 							}
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						System.out.println("You want to continue on the current menu ... ?");
+						System.out.println("You want to continue on the current menu ... ?(yes/no)");
 						scan= new Scanner(System.in);
 						choice3 = scan.nextLine();
 						switch(choice3){
@@ -103,7 +109,7 @@ public class TestMain {
 						for (Flight f : flights) {
 							System.out.println(f.getId()+" | "+f.getNumberOfPlaces()+" | "+f.getDepartureDate()+" | "+f.getArrivalDate()+" | "+f.getDepartureTown()+" | "+f.getAeroport().getTown());
 						}
-						System.out.println("You want to continue on the current menu ... ?");
+						System.out.println("You want to continue on the current menu ... ?(yes/no)");
 						scan= new Scanner(System.in);
 						choice3 = scan.nextLine();
 						switch(choice3){
@@ -146,7 +152,7 @@ public class TestMain {
 						else
 							System.out.println("There is a problem of adding this float reservation");
 						}
-						System.out.println("You want to continue on the current menu ... ?");
+						System.out.println("You want to continue on the current menu ... ?(yes/no)");
 						scan= new Scanner(System.in);
 						choice3 = scan.nextLine();
 						switch(choice3){
@@ -170,14 +176,14 @@ public class TestMain {
 						k = Integer.parseInt(clientId1); 
 						l = Integer.parseInt(flightId1);
 						Boolean test1=false;
-						//test1 = FlightManagementDelegate.doDeleteReservation(k,l);
+						test1 = FlightManagementDelegate.doDeleteReservation(k,l);
 						if(test1)
 						{
 							System.out.println("The flight reservation has been removed");
 						}
 						else
 							System.out.println("There is a problem of deleting this float reservation");
-						System.out.println("You want to continue on the current menu ... ?");
+						System.out.println("You want to continue on the current menu ... ?(yes/no)");
 						scan= new Scanner(System.in);
 						choice3 = scan.nextLine();
 						switch(choice3){
@@ -195,11 +201,11 @@ public class TestMain {
 				}
              menu=true;
              break;
-			case "2":
+			case "3":
 				boolean sousmenu1= true;
 				while(sousmenu1)
 				{
-					System.out.println("1.1 : List All Cars");
+					System.out.println("1.1 : List All Hotels");
 					System.out.println("1.2 : Search Cars By ....");
 					System.out.println("1.3 : Search Cars By .....");
 					
@@ -210,7 +216,7 @@ public class TestMain {
 					case "1":
 					   
 						
-						System.out.println("You want to continue on the current menu ... ?");
+						System.out.println("You want to continue on the current menu ... ?(yes/no)");
 						scan= new Scanner(System.in);
 						String choice3 = scan.nextLine();
 						switch(choice3){
@@ -226,7 +232,7 @@ public class TestMain {
 					case "2":
 						
 						
-						System.out.println("You want to continue on the current menu ... ?");
+						System.out.println("You want to continue on the current menu ... ?(yes/no)");
 						scan= new Scanner(System.in);
 						choice3 = scan.nextLine();
 						switch(choice3){
@@ -242,7 +248,7 @@ public class TestMain {
 					case "3":
 						
 						
-						System.out.println("You want to continue on the current menu ... ?");
+						System.out.println("You want to continue on the current menu ... ?(yes/no)");
 						scan= new Scanner(System.in);
 						choice3 = scan.nextLine();
 						switch(choice3){
