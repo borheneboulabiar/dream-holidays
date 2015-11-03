@@ -197,4 +197,6 @@ public class CarManagement implements CarManagementRemote, CarManagementLocal {
 		return (Contract) entityManager.find(Contract.class, contratId);
 	}
 
+	
+
 }

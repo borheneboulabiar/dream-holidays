@@ -14,6 +14,7 @@ import delegate.HotelManagementDelegate;
 import entities.Address;
 import entities.Car;
 import entities.Contract;
+import entities.ContractId;
 import entities.Flight;
 import entities.Hotel;
 import entities.Room;
@@ -239,6 +240,19 @@ public class TestMain {
 							System.out.println("No Cars Found :( ");
 						}
 						System.out.println("You want to continue on the current menu ... ?");
+						scan= new Scanner(System.in);
+						String choice3 = scan.nextLine();
+						switch(choice3){
+						case "yes":
+							sousmenu=true;
+							break;
+						case "no":
+							sousmenu=false;
+							menu = false;
+							break;
+						}
+						break;
+						
 					case "2":
 						scan = new Scanner(System.in);
 						System.out.println("Tape the id of Car");
@@ -253,7 +267,19 @@ public class TestMain {
 							System.out.println("Car Not Found :( ");
 						}
 						System.out.println("You want to continue on the current menu ... ?");
-
+						scan= new Scanner(System.in);
+						choice3 = scan.nextLine();
+						switch(choice3){
+						case "yes":
+							sousmenu=true;
+							break;
+						case "no":
+							sousmenu=false;
+							menu = false;
+							break;
+						}
+						break;
+						
 					case "3":
 						System.out.println("Choose Mark to Find All Related Cars");
 						List<String> marks = CarManagementDelegate.doFindAllMarkOfCar();						
@@ -296,6 +322,18 @@ public class TestMain {
 							System.out.println("No Cars Found :( ");
 						}
 						System.out.println("You want to continue on the current menu ... ?");
+						scan= new Scanner(System.in);
+						choice3 = scan.nextLine();
+						switch(choice3){
+						case "yes":
+							sousmenu=true;
+							break;
+						case "no":
+							sousmenu=false;
+							menu = false;
+							break;
+						}
+						break;
 
 					case "5":
 						List<Contract> contracts = CarManagementDelegate.doFindAllContracts();
@@ -309,13 +347,13 @@ public class TestMain {
 							}
 						}
 						else{
-							System.out.println("No Cars Found :( ");
+							System.out.println("No Contracts Found :( ");
 						}
 						System.out.println("You want to continue on the current menu ... ?");
 
 					
 						scan= new Scanner(System.in);
-						String choice3 = scan.nextLine();
+						choice3 = scan.nextLine();
 						switch(choice3){
 						case "yes":
 							sousmenu=true;
@@ -324,9 +362,118 @@ public class TestMain {
 							sousmenu=false;
 							menu = false;
 							break;
-						}
+						}// end switch (choice 3)
 						break;
-					}
+					
+					case "6":
+						System.out.println("Tape Client Identifier");
+						scan = new Scanner(System.in);
+						Integer clientId = scan.nextInt() ;
+						
+						System.out.println("Tape Car Identifier");
+						scan = new Scanner(System.in);
+						Integer carId = scan.nextInt() ;
+						
+						ContractId contractId = new ContractId();
+						contractId.setCarId(carId);
+						contractId.setClientId(clientId);
+						
+						Contract contractById = CarManagementDelegate.doFindContractById(contractId);
+						if(null != contractById){
+							
+							System.out.println(contractById.getContractId().getCarId()+"_"+contractById.getContractId().getCarId() +
+									" | Client : " + contractById.getClient().getLastName()+"_"+contractById.getClient().getFirstName()+
+								    " | Start Date : " + contractById.getStartDate().toString()+
+								    " | End Date : " + contractById.getEndDate().toString()+
+								    " | Price : " + contractById.getPrice());
+							
+						}
+						else{
+							System.out.println("No Contract Found :( ");
+						}
+						System.out.println("You want to continue on the current menu ... ?");
+						scan= new Scanner(System.in);
+						choice3 = scan.nextLine();
+						switch(choice3){
+						case "yes":
+							sousmenu=true;
+							break;
+						case "no":
+							sousmenu=false;
+							menu = false;
+							break;
+						}// end switch (choice 3)
+						break;
+						
+					case "7":
+						System.out.println("Tape Car Mark");
+						scan = new Scanner(System.in);
+						String carMark = scan.nextLine() ;												
+						
+						
+						List<Contract> contractsByMark = CarManagementDelegate.doFindContractsByCarMark(carMark);
+						if(null != contractsByMark){
+							for (Contract contract : contractsByMark) {
+								System.out.println(contract.getContractId().getCarId()+"_"+contract.getContractId().getCarId() +
+										" | Client : " + contract.getClient().getLastName()+"_"+contract.getClient().getFirstName()+
+									    " | Start Date : " + contract.getStartDate().toString()+
+									    " | End Date : " + contract.getEndDate().toString()+
+									    " | Price : " + contract.getPrice());
+							}
+							
+							
+						}
+						else{
+							System.out.println("No Contract Found :( ");
+						}
+						System.out.println("You want to continue on the current menu ... ?");
+						scan= new Scanner(System.in);
+						choice3 = scan.nextLine();
+						switch(choice3){
+						case "yes":
+							sousmenu=true;
+							break;
+						case "no":
+							sousmenu=false;
+							menu = false;
+							break;
+						}// end switch (choice 3)
+						break;
+					
+					case "8":
+						System.out.println("Tape Car Model");
+						scan = new Scanner(System.in);
+						String carModel = scan.nextLine() ;												
+												
+						List<Contract> contractsByModel = CarManagementDelegate.doFindContractsByCarMark(carModel);
+						if(null != contractsByModel){
+							for (Contract contract : contractsByModel) {
+								System.out.println(contract.getContractId().getCarId()+"_"+contract.getContractId().getCarId() +
+										" | Client : " + contract.getClient().getLastName()+"_"+contract.getClient().getFirstName()+
+									    " | Start Date : " + contract.getStartDate().toString()+
+									    " | End Date : " + contract.getEndDate().toString()+
+									    " | Price : " + contract.getPrice());
+							}
+							
+							
+						}
+						else{
+							System.out.println("No Contract Found :( ");
+						}
+						System.out.println("You want to continue on the current menu ... ?");
+						scan= new Scanner(System.in);
+						choice3 = scan.nextLine();
+						switch(choice3){
+						case "yes":
+							sousmenu=true;
+							break;
+						case "no":
+							sousmenu=false;
+							menu = false;
+							break;
+						}// end switch (choice 3)
+						break;
+					}// end switch (choice 2)
 
 				}
              menu=true;
