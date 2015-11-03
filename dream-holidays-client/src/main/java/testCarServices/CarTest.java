@@ -12,7 +12,9 @@ import org.junit.Test;
 
 import delegate.CarManagementDelegate;
 import delegate.HotelManagementDelegate;
+import entities.Address;
 import entities.Car;
+import entities.Client;
 import entities.Contract;
 import entities.ContractId;
 
@@ -102,13 +104,89 @@ public class CarTest {
 	public void testdoFindContractById() {
 		
 		ContractId cid=new ContractId();
-		cid.setCarId(1);
-		cid.setClientId(1);
+		cid.setCarId(2);
+		cid.setClientId(2);
 		Contract contract=carDelegate.doFindContractById(cid);
 		System.out.println(contract.getClient().getFirstName());
 		
 	}
-	
+	@Test
+	public void testdoFindContractsByCarId() {
+		
+		List<Contract> contracts=carDelegate.doFindContractsByCarId(1);
+		//System.out.println(contract.getClient().getFirstName());
+		
+	}
+	@Test
+	public void testdoFindContractsByCarMark() {
+		
+		List<Contract> contracts=carDelegate.doFindContractsByCarMark("Volkswagen");
+		//System.out.println(contract.getClient().getFirstName());
+		
+	}
+	@Test
+	public void testdoFindContractsByCarModel() {
+		
+		List<Contract> contracts=carDelegate.doFindContractsByCarModel("Golf 5");
+		//System.out.println(contract.getClient().getFirstName());
+		
+	}
+	@Test
+	public void testdoAddContract() {
+		Address address = new Address();
+		address.setCountry("Tunisia");
+		address.setStreet("Soliman");
+		
+		Car car = new Car();
+		car.setId(1);
+		car.setMark("Volkswagen");
+		car.setModel("Golf 5");
+		
+		Client client = new Client();
+		client.setId(1);
+		client.setAddress(address);
+		client.setEmail("borhene@gmail.com");
+		client.setFirstName("borhene");
+		client.setLastName("boulabiar");
+		client.setNIC("06489315");
+		
+		ContractId contractid=new ContractId();
+		contractid.setCarId(client.getId());
+		contractid.setClientId(client.getId());
+		Contract contract= new Contract();
+		contract.setContractId(contractid);
+		contract.setPrice(300.0);
+		
+		carDelegate.doAddContract(contract);
+	}
+	@Test
+	public void testdoDeleteContract() {
+		Address address = new Address();
+		address.setCountry("Tunisia");
+		address.setStreet("Soliman");
+		
+		Car car = new Car();
+		car.setId(1);
+		car.setMark("Volkswagen");
+		car.setModel("Golf 5");
+		
+		Client client = new Client();
+		client.setId(1);
+		client.setAddress(address);
+		client.setEmail("borhene@gmail.com");
+		client.setFirstName("borhene");
+		client.setLastName("boulabiar");
+		client.setNIC("06489315");
+		
+		ContractId contractid=new ContractId();
+		contractid.setCarId(client.getId());
+		contractid.setClientId(client.getId());
+		Contract contract= new Contract();
+		contract.setContractId(contractid);
+		contract.setPrice(300.0);
+		
+		carDelegate.doDeleteCar(car.getId());
+	}
 
 
 }

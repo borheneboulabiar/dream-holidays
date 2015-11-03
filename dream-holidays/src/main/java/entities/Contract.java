@@ -3,12 +3,17 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 @Entity
 public class Contract implements Serializable{
+
+
 private ContractId contractId;
 private Date startDate;
 private Date endDate;
@@ -49,6 +54,7 @@ public Contract(ContractId contractId, Date startDate, Date endDate,
 	this.endDate = endDate;
 	this.price = price;
 }
+
 @EmbeddedId
 public ContractId getContractId() {
 	return contractId;

@@ -60,11 +60,11 @@ public class HotelManagementDelegate {
 		return getProxy().GetReservationsNow(h);
 	}
 	
-	public static List<Hotel> doGetHotelsWithRoomPrice(float price)
+	public static List<Hotel> doGetHotelsWithRoomPrice(int price)
 	{
 	return  getProxy().getHotelsWithRoomPrice(price);
 	}
-	public static List<Hotel> doGetHotelsWithMaxRoomPrice(float price)
+	public static List<Hotel> doGetHotelsWithMaxRoomPrice(int price)
 	{
 	return getProxy().getHotelsWithMaxRoomPrice(price);
 	}
