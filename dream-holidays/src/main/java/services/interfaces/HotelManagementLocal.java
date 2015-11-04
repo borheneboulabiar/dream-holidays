@@ -29,7 +29,7 @@ public interface HotelManagementLocal {
 	HotelReservation SearchDetailReservationByHotelClient(Client c , Hotel h);
 	List<HotelReservation> GetReservationsNow(Hotel h);
 	
-	List<Hotel> getHotelsWithRoomPrice(float price);
-	List<Hotel> getHotelsWithMaxRoomPrice(float price);
+	List<Hotel> getHotelsWithRoomPrice(int price);
+	List<Hotel> getHotelsWithMaxRoomPrice(int price);
 	
 }

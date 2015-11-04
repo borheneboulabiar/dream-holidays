@@ -72,7 +72,7 @@ public class HotelTest {
 	@Test
 	public void testdoGetPricesRoomForHotel() {
 
-		List<Room> rooms=hd.doGetPricesRoomForHotel("aaaa");
+		List<Room> rooms=hd.doGetPricesRoomForHotel("Movempick");
 	}
 	@Test
 	public void testdoSearchDetailReservationByHotelClient() {

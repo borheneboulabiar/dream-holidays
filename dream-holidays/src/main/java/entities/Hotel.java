@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,15 +22,28 @@ public class Hotel implements Serializable {
 	private Integer phoneNumber;
 	private Integer NumberofStars;
 
+	private List<Room> rooms;
+	
 	private List<HotelReservation> reservationsHotel;
 
 	@OneToMany(mappedBy = "hotel")
+	@Column(nullable=true)
 	public List<HotelReservation> getReservationsHotel() {
 		return reservationsHotel;
 	}
 
 	public void setReservationsHotel(List<HotelReservation> reservationsHotel) {
 		this.reservationsHotel = reservationsHotel;
+	}
+
+	@OneToMany(mappedBy = "hotel")
+	@Column(nullable=true)
+	public List<Room> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(List<Room> rooms) {
+		this.rooms = rooms;
 	}
 
 	public Hotel() {

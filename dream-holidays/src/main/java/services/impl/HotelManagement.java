@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 
 import entities.Address;
 import entities.Client;
+import entities.Flight;
 import entities.Hotel;
 import entities.HotelReservation;
 import entities.HotelReservationId;
@@ -71,27 +72,26 @@ public class HotelManagement implements HotelManagementRemote,
 		// entityManager.merge(hotel);
 
 	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Hotel> findAllHotels() {
-
-		/*TypedQuery<Hotel> query = entityManager.createQuery(
-				"SELECT h FROM Hotel h", Hotel.class);
-
-		List<Hotel> list = query.getResultList();
-
-		return list;*/
-		
 		String jpql = "select h from Hotel h";
 		Query query = entityManager.createQuery(jpql);
 		return query.getResultList();
-
 	}
+
 
 	@Override
 	public Hotel SearchHotelById(int id) {
 
-		return entityManager.find(Hotel.class, id);
+		Hotel hotel=null;
+		try {
+			hotel = entityManager.find(Hotel.class, id);
+		} catch (Exception e) {
+			return null;
+		}
+		return hotel;
+		
 	}
 
 	@Override
@@ -180,7 +180,7 @@ public class HotelManagement implements HotelManagementRemote,
 		try {
 			TypedQuery<Room> query = entityManager
 					.createQuery(
-							"SELECT r FROM Room r, Hotel h where h.id=r.hotelid and h.name like :name",
+							"SELECT r FROM Room r JOIN r.hotel h where h.name like :name",
 							Room.class).setParameter("name", "%" + name + "%");
 
 			rooms = query.getResultList();
@@ -214,42 +214,28 @@ public class HotelManagement implements HotelManagementRemote,
 	}
 
 	@Override
-	public List<Hotel> getHotelsWithRoomPrice(float price) {
-		List<Hotel> hotels = null;
+	public List<Hotel> getHotelsWithRoomPrice(int price) {
+		Query query = null;
 
 		try {
-			TypedQuery<Hotel> query = entityManager
-					.createQuery(
-							"SELECT h FROM Hotel h,Room r where h.id=r.hotelid and r.price=:price",
-							Hotel.class)
+			query = entityManager.createQuery("SELECT r FROM Room r JOIN r.hotel h where r.price=:price")
 					.setParameter("price", price);
 
-			hotels = query.getResultList();
+			
 
 		} catch (NoResultException e) {
 			System.out.println("aucun hotels avec ce prix");
 		}
 
-		return hotels;
+		return query.getResultList();
 	}
 	@Override
-	public List<Hotel> getHotelsWithMaxRoomPrice(float price) {
-		List<Hotel> hotels = null;
-
-		try {
-			TypedQuery<Hotel> query = entityManager
-					.createQuery(
-							"SELECT DISTINCT h FROM Hotel h,Room r where h.id=r.hotelid and r.price<:price",
-							Hotel.class)
-					.setParameter("price", price);
-
-			hotels = query.getResultList();
-
-		} catch (NoResultException e) {
-			System.out.println("aucun hotels avec ce prix");
-		}
-
-		return hotels;
+	public List<Hotel> getHotelsWithMaxRoomPrice(int price) {
+		String jpql = "select DISTINCT h from Hotel h join h.Room r where r.price<:price";
+		Query query = entityManager.createQuery(jpql);
+		query.setParameter("price", price);
+		
+		return query.getResultList();
 	}
 
 }

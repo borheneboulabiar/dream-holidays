@@ -18,6 +18,9 @@ import javax.persistence.PersistenceContext;
 
 
 
+
+
+
 import entities.Address;
 import entities.Aeroport;
 import entities.Car;
@@ -27,6 +30,9 @@ import entities.ContractId;
 import entities.Flight;
 import entities.Hotel;
 import entities.HotelReservation;
+import entities.HotelReservationId;
+import entities.HotelRoom;
+import entities.Room;
 
 @Singleton
 @LocalBean
@@ -119,10 +125,10 @@ public class PopulateDB {
 		car1.setModel("Polo 5");
 		entityManager.persist(car1);
 		
-		Address address2 = new Address("Tunisia","Gabes");
+		Address address2 = new Address("Tunisia","Hammamet");
 		
 		
-		Address address3 = new Address("Tunisia","Mahdia");
+		Address address3 = new Address("Tunisia","Sousse");
 		
 		
 		Hotel hotel = new Hotel();
@@ -138,9 +144,19 @@ public class PopulateDB {
 		hotel1.setPhoneNumber(72400300);
 		hotel1.setAddress(address3);
 		entityManager.persist(hotel1);
-		//HotelReservation hotelReservation = new HotelReservation();
-		//hotelReservation.setClient(client1);
-		//hotelReservation.setHotel(hotel1);
+		HotelReservation hotelReservation = new HotelReservation();
+		hotelReservation.setArrivalDate(new Date());
+		try {
+			hotelReservation.setDepartureDate(dt.parse("05.12.2015"));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		HotelReservationId hotelReservationId=new HotelReservationId();
+		hotelReservationId.setClientId(client1.getId());
+		hotelReservationId.setHotelId(hotel1.getId());
+		hotelReservation.setHotelReservationId(hotelReservationId);
+		entityManager.persist(hotelReservation);
 		
 		Contract contract1=new Contract();
 		ContractId contractid=new ContractId();
@@ -158,8 +174,13 @@ public class PopulateDB {
 		}
 		//entityManager.persist(contractid);
 		entityManager.persist(contract1);
-		
-		
+		Room room1=new Room();
+		HotelRoom roomid=new HotelRoom();
+		roomid.setHotelid(hotel1.getId());
+		roomid.setId(1);
+		room1.setHotelRoomId(roomid);
+		room1.setPrice(300);
+		entityManager.persist(room1);
 	}
 
 }
