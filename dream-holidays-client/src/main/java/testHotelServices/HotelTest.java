@@ -16,6 +16,7 @@ import entities.Address;
 import entities.Client;
 import entities.Hotel;
 import entities.HotelReservation;
+import entities.Room;
 
 public class HotelTest {
 
@@ -38,21 +39,7 @@ public class HotelTest {
 		List<Hotel> listh=hd.dofindAllHotels();
 		
 	}
-	@Test
-	public void testAddHotel() {
-
-		Client c=new Client();
-		c.setId(1);
-		Hotel h=new Hotel();
-		//h.setId(2);
-		HotelReservation hr=new HotelReservation();
-		hr.setHotel(h);
-		List<HotelReservation> lhr=new ArrayList<>();
-		lhr.add(hr);
-		h.setReservationsHotel(lhr);
-		h.setName("aaaaaaaaaaaaaa");
-		hd.doAddHotel(h);
-	}
+	
 	@Test
 	public void testFindHotelById() {
 
@@ -80,5 +67,36 @@ public class HotelTest {
 		//h.setNumberofStars(5);
 		h.setName("aaaaaaaaaaaaaa");
 		hd.doSearchHotelByName(h.getName());
+	}
+	
+	@Test
+	public void testdoGetPricesRoomForHotel() {
+
+		List<Room> rooms=hd.doGetPricesRoomForHotel("aaaa");
+	}
+	@Test
+	public void testdoSearchDetailReservationByHotelClient() {
+
+		Client c=new Client();
+		c.setId(1);
+		Hotel h=new Hotel();
+		h.setId(1);
+		HotelReservation hotelReservation=hd.doSearchDetailReservationByHotelClient(c,h);
+	}
+	@Test
+	public void testdoGetReservationsNow() {
+		Hotel h=new Hotel();
+		h.setId(1);
+		List<HotelReservation> hotelReservation=hd.doGetReservationsNow(h);
+	}
+	@Test
+	public void testdoGetHotelsWithRoomPrice() {
+
+		List<Hotel> hotels=hd.doGetHotelsWithRoomPrice(300);
+	}
+	@Test
+	public void testdoGetHotelsWithMaxRoomPrice() {
+
+		List<Hotel> hotels=hd.doGetHotelsWithMaxRoomPrice(300);
 	}
 }

@@ -16,10 +16,14 @@ import javax.persistence.PersistenceContext;
 
 
 
+
+
 import entities.Address;
 import entities.Aeroport;
 import entities.Car;
 import entities.Client;
+import entities.Contract;
+import entities.ContractId;
 import entities.Flight;
 import entities.Hotel;
 import entities.HotelReservation;
@@ -115,13 +119,11 @@ public class PopulateDB {
 		car1.setModel("Polo 5");
 		entityManager.persist(car1);
 		
-		Address address2 = new Address();
-		address.setCountry("Tunisia");
-		address.setStreet("Sousse");
+		Address address2 = new Address("Tunisia","Gabes");
 		
-		Address address3 = new Address();
-		address.setCountry("Tunisia");
-		address.setStreet("Hammamet");
+		
+		Address address3 = new Address("Tunisia","Mahdia");
+		
 		
 		Hotel hotel = new Hotel();
 		hotel.setName("Movempick");
@@ -139,6 +141,24 @@ public class PopulateDB {
 		//HotelReservation hotelReservation = new HotelReservation();
 		//hotelReservation.setClient(client1);
 		//hotelReservation.setHotel(hotel1);
+		
+		Contract contract1=new Contract();
+		ContractId contractid=new ContractId();
+		contractid.setCarId(client1.getId());
+		contractid.setClientId(car1.getId());
+		contract1.setContractId(contractid);
+		/*contract1.setClient(client1);
+		contract1.setCar(car1);*/
+		try {
+			contract1.setStartDate(dt.parse("01.02.2015"));
+			contract1.setEndDate(dt.parse("01.05.2015"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//entityManager.persist(contractid);
+		entityManager.persist(contract1);
+		
 		
 	}
 
