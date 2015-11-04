@@ -13,6 +13,7 @@ import delegate.FlightManagementDelegate;
 import delegate.HotelManagementDelegate;
 import entities.Address;
 import entities.Car;
+import entities.Client;
 import entities.Contract;
 import entities.ContractId;
 import entities.Flight;
@@ -223,6 +224,8 @@ public class TestMain {
 					System.out.println("1.6 : Find Contract By Id");
 					System.out.println("1.7 : List All Contracts By Car Mark");
 					System.out.println("1.8 : List All Contracts By Car Model");
+					System.out.println("1.9 : Add Contract");
+					
 					scan= new Scanner(System.in);
 					String choice2 = scan.nextLine();
 					switch(choice2){
@@ -460,6 +463,65 @@ public class TestMain {
 						else{
 							System.out.println("No Contract Found :( ");
 						}
+						System.out.println("You want to continue on the current menu ... ?");
+						scan= new Scanner(System.in);
+						choice3 = scan.nextLine();
+						switch(choice3){
+						case "yes":
+							sousmenu=true;
+							break;
+						case "no":
+							sousmenu=false;
+							menu = false;
+							break;
+						}// end switch (choice 3)
+						break;
+					
+					case "9":
+						System.out.println("Tape Car Identifier");
+						scan = new Scanner(System.in);
+						Integer carid = scan.nextInt() ;												
+						Car carFound = CarManagementDelegate.doFindCarById(carid);
+						if(null == carFound){
+							System.out.println("No Car Found !!");
+							break;
+						}
+						System.out.println("Tape Client Identifier");
+						scan = new Scanner(System.in);
+						Integer clientid = scan.nextInt() ;
+						Client clientFound = FlightManagementDelegate.doFindClienById(clientid);
+						if(null == clientFound){
+							System.out.println("Client Not Found !!");
+							break;
+						}
+						System.out.println("Tape Price");
+						scan = new Scanner(System.in);
+						Double price = scan.nextDouble();
+						
+						System.out.println("Tape Start Date");
+						scan = new Scanner(System.in);
+						String strdate = scan.nextLine() ;
+						
+						System.out.println("Tape End Date");
+						scan = new Scanner(System.in);
+						String enddate = scan.nextLine() ;
+						
+						SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy");
+						try {
+							Date sdate = dt.parse(strdate);
+							Date edate = dt.parse(enddate);
+							Contract newContract = new Contract();
+							newContract.setCar(carFound);
+							newContract.setClient(clientFound);
+							newContract.setStartDate(sdate);
+							newContract.setEndDate(edate);
+							newContract.setPrice(price);
+							CarManagementDelegate.doAddContract(newContract);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						
+						
 						System.out.println("You want to continue on the current menu ... ?");
 						scan= new Scanner(System.in);
 						choice3 = scan.nextLine();
